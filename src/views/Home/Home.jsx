@@ -3,7 +3,7 @@ import { useState, useContext, useEffect } from "react";
 import { GlobalContext } from "@src/Providers/GlobalContext";
 import { HomeWeather } from "@src/Components/HomeWeather";
 
- export function Home() {
+export function Home() {
   const [value, setValue] = useState("");
   const { weathers, setWeathers } = useContext(GlobalContext);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -13,16 +13,20 @@ import { HomeWeather } from "@src/Components/HomeWeather";
 
   async function getOneWeather(city) {
     try {
-      const resp = await axios.get(
-        `http://api.weatherapi.com/v1/current.json?key=449a4e9f33e1414cbdf154018241905&q=${city}&aqi=yes`
-      );
-      setWeathers((prevUser) => ({
-        ...prevUser,
-        weatherData: [...prevUser.weatherData, resp.data],
-      }));
+      if (value !== "") {
+        const resp = await axios.get(
+          `http://api.weatherapi.com/v1/current.json?key=449a4e9f33e1414cbdf154018241905&q=${city}&aqi=yes`
+        );
+        setWeathers((prevUser) => ({
+          ...prevUser,
+          weatherData: [...prevUser.weatherData, resp.data],
+        }));
+      } else {
+        return;
+      }
       setValue("");
     } catch (error) {
-      alert(error.response.data.error.message, "Please input it correctly");
+      alert(`${error.response.data.error.message} Please Enter it correctly`);
     } finally {
       setValue("");
     }
@@ -34,23 +38,8 @@ import { HomeWeather } from "@src/Components/HomeWeather";
     }
   };
 
-  useEffect(() => {
-    const timerId = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-
-    return () => clearInterval(timerId);
-  }, []);
-
-  const formatTime = (date) => {
-    const hours = date.getHours().toString().padStart(2, "0");
-    const minutes = date.getMinutes().toString().padStart(2, "0");
-    const seconds = date.getSeconds().toString().padStart(2, "0");
-    return `${hours}:${minutes}:${seconds}`;
-  };
-
   return (
-    <div className="p-20 flex justify-between">
+    <div className="p-20 flex items-start justify-between">
       <HomeWeather />
       <div className="flex flex-col items-center gap-1">
         <h1 className="text-red-400 hover:cursor-pointer">
@@ -71,7 +60,6 @@ import { HomeWeather } from "@src/Components/HomeWeather";
           >
             Search
           </button>
-          <div>{formatTime(currentTime)}</div>
         </div>
         <div className="grid grid-cols-3 gap-x-12">
           {weathers.weatherData.map((item, index) => {
