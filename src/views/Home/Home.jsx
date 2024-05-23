@@ -6,10 +6,6 @@ import { HomeWeather } from "@src/Components/HomeWeather";
 export function Home() {
   const [value, setValue] = useState("");
   const { weathers, setWeathers } = useContext(GlobalContext);
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [threeWeather, setThreeWeather] = useState({
-    weathersData: [],
-  });
 
   async function getOneWeather(city) {
     try {
@@ -68,10 +64,8 @@ export function Home() {
                 <div>
                   <h1 className="text-center">{item.location.name}</h1>
                   <h2 className="text-center">
-                    {" "}
                     country: {item.location.country}
                   </h2>
-
                   <h1>
                     <span className="text-orange-400">temp_c</span>{" "}
                     {item.current.temp_c}

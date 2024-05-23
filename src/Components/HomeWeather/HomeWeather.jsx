@@ -5,7 +5,18 @@ import { FiSun } from "react-icons/fi";
 export function HomeWeather() {
   const [TbilisiWeather, setTbilisiWeather] = useState();
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentWeekDay, setCurrentWeekDay] = useState();
   const [FilteredHours, setFilteredHours] = useState();
+
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
 
   const formatTime = (date) => {
     const hours = date.getHours().toString().padStart(2, "0");
@@ -74,6 +85,7 @@ export function HomeWeather() {
       setTbilisiWeather(resp.data);
     }
     GetTbilisiWeather();
+    setCurrentWeekDay(currentTime.getDay());
   }, [currentTime.toString()[8], currentTime.toString()[9]]);
 
   useEffect(() => {
@@ -94,6 +106,7 @@ export function HomeWeather() {
           </div>
           <div>
             <p>{formatTime(currentTime)}</p>
+            <p>{daysOfWeek[currentWeekDay]}</p>
             <div>{getCurrentHoursWeathers()}</div>
           </div>
         </>
