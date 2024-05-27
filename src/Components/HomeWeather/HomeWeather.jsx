@@ -45,34 +45,52 @@ export function HomeWeather() {
   }
 
   function getCurrentHoursWeathers() {
+    const getNextHours = (startDayIndex, startHourIndex) => {
+      const hours = [];
+      let currentDayIndex = startDayIndex;
+      let currentHourIndex = startHourIndex;
+      while (
+        hours.length < 5 &&
+        currentDayIndex < TbilisiWeather.forecast.forecastday.length
+      ) {
+        const day = TbilisiWeather.forecast.forecastday[currentDayIndex];
+        while (currentHourIndex < day.hour.length && hours.length < 5) {
+          hours.push(day.hour[currentHourIndex]);
+          currentHourIndex++;
+        }
+        currentDayIndex++;
+        currentHourIndex = 0;
+      }
+
+      return hours;
+    };
+    const firstDay = TbilisiWeather.forecast.forecastday[0];
+    const startIndex = firstDay.hour.findIndex((hour) => {
+      const hourValue = parseInt(hour.time.substring(11, 13));
+      return hourValue >= FilteredHours;
+    });
+
+    let hoursToShow = [];
+    if (startIndex !== -1) {
+      hoursToShow = getNextHours(0, startIndex);
+    } else {
+      hoursToShow = getNextHours(0, 0);
+    }
+
     return (
       <div className="flex gap-2">
-        {TbilisiWeather.forecast.forecastday.map((day, index) => {
-          let hours = [];
-          if (day.hour) {
-            if (index === 0) {
-              const startIndex = day.hour.findIndex((hour) => {
-                const hourValue = parseInt(hour.time.substring(11, 13));
-                return hourValue >= FilteredHours;
-              });
-              hours = day.hour.slice(startIndex);
-            } else {
-              hours = day.hour;
-            }
-            return hours.slice(0, 2).map((hour) => (
-              <div key={hour.time} className="flex flex-col items-center gap-2">
-                <img className="size-8" src={hour.condition.icon} alt="" />
-                <div className="flex">
-                  <FiSun className="mr-1 mt-1 text-yellow-400" />
-                  <div>
-                    <p>{hour.temp_c} &deg;C</p>
-                    <p>{hour.time.split(" ")[1]}</p>
-                  </div>
-                </div>
+        {hoursToShow.map((hour) => (
+          <div key={hour.time} className="flex flex-col items-center gap-2">
+            <img className="size-8" src={hour.condition.icon} alt="" />
+            <div className="flex">
+              <FiSun className="mr-1 mt-1 text-yellow-400" />
+              <div>
+                <p>{hour.temp_c} &deg;C</p>
+                <p>{hour.time.split(" ")[1]}</p>
               </div>
-            ));
-          }
-        })}
+            </div>
+          </div>
+        ))}
       </div>
     );
   }
