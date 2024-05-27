@@ -1,22 +1,16 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { FiSun } from "react-icons/fi";
+import React from "react";
+import Carousel from "react-simply-carousel";
+import { useContext } from "react";
+import { GlobalContext } from "@src/Providers/GlobalContext";
 
 export function HomeWeather() {
-  const [TbilisiWeather, setTbilisiWeather] = useState();
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [currentWeekDay, setCurrentWeekDay] = useState();
+  const { TbilisiWeather, currentTime, setCurrentTime, currentWeekDay } =
+    useContext(GlobalContext);
   const [FilteredHours, setFilteredHours] = useState();
-
-  const daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
   const formatTime = (date) => {
     const hours = date.getHours().toString().padStart(2, "0");
@@ -50,18 +44,17 @@ export function HomeWeather() {
       let currentDayIndex = startDayIndex;
       let currentHourIndex = startHourIndex;
       while (
-        hours.length < 5 &&
+        hours.length < 18 &&
         currentDayIndex < TbilisiWeather.forecast.forecastday.length
       ) {
         const day = TbilisiWeather.forecast.forecastday[currentDayIndex];
-        while (currentHourIndex < day.hour.length && hours.length < 5) {
+        while (currentHourIndex < day.hour.length && hours.length < 18) {
           hours.push(day.hour[currentHourIndex]);
           currentHourIndex++;
         }
         currentDayIndex++;
         currentHourIndex = 0;
       }
-
       return hours;
     };
     const firstDay = TbilisiWeather.forecast.forecastday[0];
@@ -78,33 +71,50 @@ export function HomeWeather() {
     }
 
     return (
-      <div className="flex gap-2">
-        {hoursToShow.map((hour) => (
-          <div key={hour.time} className="flex flex-col items-center gap-2">
-            <img className="size-8" src={hour.condition.icon} alt="" />
-            <div className="flex">
-              <FiSun className="mr-1 mt-1 text-yellow-400" />
-              <div>
-                <p>{hour.temp_c} &deg;C</p>
-                <p>{hour.time.split(" ")[1]}</p>
+      <div className="flex gap-2 relative">
+        <Carousel
+          activeSlideIndex={activeSlideIndex}
+          onRequestChange={setActiveSlideIndex}
+          itemsToShow={5}
+          itemsToScroll={1}
+          autoplay={true}
+          speed={400}
+          easing="linear"
+          autoplayDelay={2500}
+          forwardBtnProps={{
+            className:
+              "border-none h-full opacity-0 cursor-pointer  hover:opacity-20 absolute top-1/2 right-0 transform -translate-y-1/2  ",
+            children: (
+              <h1 className="p-2 bg-slate-400 h-full flex items-center text-white ">{`>`}</h1>
+            ),
+          }}
+          backwardBtnProps={{
+            className:
+              "border-none opacity-0 cursor-pointer z-10 h-full hover:opacity-20 absolute top-1/2 left-0 transform -translate-y-1/2  ",
+            children: (
+              <h1 className="p-2  bg-slate-400 h-full flex items-center   text-white  ">{`<`}</h1>
+            ),
+          }}
+        >
+          {hoursToShow.map((hour) => (
+            <div
+              key={hour.time}
+              className="flex flex-col items-center gap-2 min-w-20 py-4"
+            >
+              <img className="size-8" src={hour.condition.icon} alt="" />
+              <div className="flex">
+                <FiSun className="mr-1 mt-1 text-yellow-400" />
+                <div>
+                  <p>{hour.temp_c} &deg;C</p>
+                  <p>{hour.time.split(" ")[1]}</p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </Carousel>
       </div>
     );
   }
-
-  useEffect(() => {
-    async function GetTbilisiWeather() {
-      const resp = await axios.get(
-        "http://api.weatherapi.com/v1/forecast.json?key=449a4e9f33e1414cbdf154018241905&q=Tbilisi&days=2&aqi=no&alerts=no"
-      );
-      setTbilisiWeather(resp.data);
-    }
-    GetTbilisiWeather();
-    setCurrentWeekDay(currentTime.getDay());
-  }, [currentTime.toString()[8], currentTime.toString()[9]]);
 
   useEffect(() => {
     if (TbilisiWeather !== undefined) {
@@ -113,21 +123,21 @@ export function HomeWeather() {
   }, [TbilisiWeather, currentTime]);
 
   return (
-    <div className=" flex flex-col gap-2 border-solid border border-blue-300 p-4 rounded">
+    <div className=" flex flex-col gap-2 border-solid border border-blue-300 rounded bg-slate-100">
       {TbilisiWeather !== undefined && (
-        <>
-          <div>
+        <div>
+          <div className="p-4">
             <h1 className="text-[#15719f]">{TbilisiWeather.location.name}</h1>
             <p className="text-[#15719f]">
               Country: {TbilisiWeather.location.country}
             </p>
+            <p>{formatTime(currentTime)}</p>
+            <p>{currentWeekDay}</p>
           </div>
           <div>
-            <p>{formatTime(currentTime)}</p>
-            <p>{daysOfWeek[currentWeekDay]}</p>
             <div>{getCurrentHoursWeathers()}</div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
