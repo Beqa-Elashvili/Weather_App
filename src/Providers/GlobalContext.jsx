@@ -12,26 +12,78 @@ const daysOfWeek = [
   "Friday",
   "Saturday",
 ];
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 export const GlobalProvider = ({ children }) => {
   const [TbilisiWeather, setTbilisiWeather] = useState();
-  const [currentWeekDay, setCurrentWeekDay] = useState();
-
+  const [currentWeekDay, setCurrentWeekDay] = useState("");
+  const [currentMonth, setcurrentMonth] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentVideo, setCurrentVideo] = useState("");
   const [weathers, setWeathers] = useState({
     weatherData: [],
   });
 
   useEffect(() => {
+    if (
+      TbilisiWeather?.current.condition.text === "Sunny" ||
+      TbilisiWeather?.current.condition.text === "Partly cloudy"
+    ) {
+      setCurrentVideo("good");
+      return;
+    }
+    if (
+      TbilisiWeather?.current.condition.text === "Patchy rain nearby" ||
+      TbilisiWeather?.current.condition.text === "Cloudy"
+    ) {
+      setCurrentVideo("middle");
+      return;
+    } else if (TbilisiWeather?.current.condition.text === "Moderate rain") {
+      setCurrentVideo("bad");
+      return;
+    } else if (
+      TbilisiWeather?.current.condition.text === "Mist" ||
+      TbilisiWeather?.current.condition.text === "Overcast"
+    ) {
+      setCurrentVideo("mist");
+      return;
+    } else if (
+      TbilisiWeather?.current.condition.text === "Blowing snow" ||
+      TbilisiWeather?.current.condition.text === "Blizzard" ||
+      TbilisiWeather?.current.condition.text === "Moderate snow" ||
+      TbilisiWeather?.current.condition.text === "Light Snow"
+    ) {
+      setCurrentVideo("high snow");
+      return;
+    } else {
+      setCurrentVideo("good");
+    }
+  }, [TbilisiWeather?.current.condition.text]);
+
+  useEffect(() => {
     async function GetTbilisiWeather() {
       const resp = await axios.get(
-        "http://api.weatherapi.com/v1/forecast.json?key=449a4e9f33e1414cbdf154018241905&q=Tbilisi&days=7&aqi=no&alerts=no"
+        "http://api.weatherapi.com/v1/forecast.json?key=449a4e9f33e1414cbdf154018241905&q=Norilsk&days=7&aqi=no&alerts=no"
       );
       setTbilisiWeather(resp.data);
     }
     const current = currentTime.getDay();
     GetTbilisiWeather();
     setCurrentWeekDay(daysOfWeek[current]);
+    setcurrentMonth(monthNames[current + 1]);
   }, [currentTime.toString()[8], currentTime.toString()[9]]);
 
   return (
@@ -45,6 +97,10 @@ export const GlobalProvider = ({ children }) => {
         setCurrentTime,
         currentWeekDay,
         setCurrentWeekDay,
+        currentMonth,
+        setcurrentMonth,
+        currentVideo,
+        setCurrentVideo,
       }}
     >
       {children}

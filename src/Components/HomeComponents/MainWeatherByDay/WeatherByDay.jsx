@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "@src/Providers/GlobalContext";
-
+import { FaTemperatureHigh } from "react-icons/fa6";
+import { LuSunrise, LuSunset } from "react-icons/lu";
 const daysOfWeek = [
   "Sunday",
   "Monday",
@@ -12,7 +13,7 @@ const daysOfWeek = [
 ];
 
 export function WeatherByDay() {
-  const { TbilisiWeather } = useContext(GlobalContext);
+  const { TbilisiWeather, currentMonth } = useContext(GlobalContext);
   const [currentDay, setCurrentDay] = useState(new Date());
   const current = currentDay.getDay();
 
@@ -29,18 +30,65 @@ export function WeatherByDay() {
   }, []);
 
   return (
-    <div>
-      <div>
-        <div className="flex gap-4">
+    <div className="z-10">
+      <div className="border-solid border border-blue-300 rounded bg-slate-100 p-4">
+        <div className="flex gap-12">
           {reorderedDaysOfWeek.map((day, index) => {
             return (
               <div key={index}>
-                <p>{day}</p>
+                <p className="text-xl">{day}</p>
                 {TbilisiWeather !== undefined && (
                   <>
-                    <div>
-                      <div>
-                        {TbilisiWeather.forecast.forecastday[index].date}
+                    <div className="flex flex-col gap-2">
+                      <p>
+                        {TbilisiWeather.forecast.forecastday[index].date
+                          .split("-")
+                          .pop()}{" "}
+                        {currentMonth}
+                      </p>
+                      <div className="mt-">
+                        <p>
+                          <LuSunrise className="text-yellow-600" />{" "}
+                          {TbilisiWeather.forecast.forecastday[
+                            index
+                          ].astro.sunrise
+                            .split(" ")
+                            .slice(0, 1)}
+                        </p>
+                        <p>
+                          <LuSunset className="text-yellow-600" />{" "}
+                          {TbilisiWeather.forecast.forecastday[
+                            index
+                          ].astro.sunset
+                            .split(" ")
+                            .slice(0, 1)}
+                        </p>
+                      </div>
+                      <div className="text-center">
+                        <img
+                          className="size-12"
+                          src={
+                            TbilisiWeather.forecast.forecastday[index].day
+                              .condition.icon
+                          }
+                          alt="weather_icon"
+                        />
+                      </div>
+                      <div className="flex">
+                        <p className="flex items-center gap-1">
+                          <FaTemperatureHigh className="text-yellow-500" />
+                          {
+                            TbilisiWeather.forecast.forecastday[index].day
+                              .maxtemp_c
+                          }
+                        </p>
+                        {" - "}
+                        <p>
+                          {
+                            TbilisiWeather.forecast.forecastday[index].day
+                              .mintemp_c
+                          }
+                        </p>
                       </div>
                     </div>
                   </>
@@ -48,15 +96,6 @@ export function WeatherByDay() {
               </div>
             );
           })}
-        </div>
-        <div>
-          {TbilisiWeather !== undefined && (
-            <>
-              {TbilisiWeather.forecast.forecastday.map((item, index) => {
-                return <div key={index}></div>;
-              })}
-            </>
-          )}
         </div>
       </div>
     </div>

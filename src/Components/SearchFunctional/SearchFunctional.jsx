@@ -5,13 +5,13 @@ import { HomeWeather } from "@src/Components/HomeComponents/HomeWeather";
 
 export function SearchFunction() {
   const [value, setValue] = useState("");
-  const { weathers } = useContext(GlobalContext);
+  const { weathers, setWeathers } = useContext(GlobalContext);
 
   async function getOneWeather(city) {
     try {
       if (value !== "") {
         const resp = await axios.get(
-          `http://api.weatherapi.com/v1/current.json?key=449a4e9f33e1414cbdf154018241905&q=${city}&aqi=yes`
+          `http://api.weatherapi.com/v1/forecast.json?key=449a4e9f33e1414cbdf154018241905&q=Tbilisi&days=7&aqi=${city}&alerts=no`
         );
         setWeathers((prevUser) => ({
           ...prevUser,

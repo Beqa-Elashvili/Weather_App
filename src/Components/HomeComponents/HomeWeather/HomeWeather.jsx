@@ -71,16 +71,14 @@ export function HomeWeather() {
     }
 
     return (
-      <div className="flex gap-2 relative">
+      <div className="flex gap-2 relative z-10">
         <Carousel
           activeSlideIndex={activeSlideIndex}
           onRequestChange={setActiveSlideIndex}
           itemsToShow={5}
           itemsToScroll={1}
-          autoplay={true}
           speed={400}
           easing="linear"
-          autoplayDelay={2500}
           forwardBtnProps={{
             className:
               "border-none h-full opacity-0 cursor-pointer  hover:opacity-20 absolute top-1/2 right-0 transform -translate-y-1/2  ",
@@ -123,7 +121,7 @@ export function HomeWeather() {
   }, [TbilisiWeather, currentTime]);
 
   return (
-    <div className=" flex flex-col gap-2 border-solid border border-blue-300 rounded bg-slate-100">
+    <div className=" flex flex-col z-10 gap-2 border-solid border border-blue-300 rounded bg-slate-100">
       {TbilisiWeather !== undefined && (
         <div>
           <div className="p-4">
