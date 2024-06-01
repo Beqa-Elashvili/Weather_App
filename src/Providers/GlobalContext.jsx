@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useMemo, useEffect } from "react";
 import axios from "axios";
 
 export const GlobalContext = createContext();
@@ -36,6 +36,7 @@ export const GlobalProvider = ({ children }) => {
   const [weathers, setWeathers] = useState({
     weatherData: [],
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (
@@ -75,10 +76,18 @@ export const GlobalProvider = ({ children }) => {
 
   useEffect(() => {
     async function GetTbilisiWeather() {
-      const resp = await axios.get(
-        "http://api.weatherapi.com/v1/forecast.json?key=449a4e9f33e1414cbdf154018241905&q=Norilsk&days=7&aqi=no&alerts=no"
-      );
-      setTbilisiWeather(resp.data);
+      try {
+        setLoading(true);
+        const resp = await axios.get(
+          "http://api.weatherapi.com/v1/forecast.json?key=449a4e9f33e1414cbdf154018241905&q=Tbilisi&days=7&aqi=no&alerts=no"
+        );
+        setTbilisiWeather(resp.data);
+        setLoading(false);
+      } catch (error) {
+        alert("fetch wether data failed");
+      } finally {
+        setLoading(false);
+      }
     }
     const current = currentTime.getDay();
     GetTbilisiWeather();
@@ -101,6 +110,8 @@ export const GlobalProvider = ({ children }) => {
         setcurrentMonth,
         currentVideo,
         setCurrentVideo,
+        loading,
+        setLoading,
       }}
     >
       {children}
