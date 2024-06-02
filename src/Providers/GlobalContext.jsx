@@ -90,9 +90,10 @@ export const GlobalProvider = ({ children }) => {
       }
     }
     const current = currentTime.getDay();
+    const currentMonth = currentTime.getMonth();
     GetTbilisiWeather();
     setCurrentWeekDay(daysOfWeek[current]);
-    setcurrentMonth(monthNames[current + 1]);
+    setcurrentMonth(monthNames[currentMonth]);
   }, [currentTime.toString()[8], currentTime.toString()[9]]);
 
   return (

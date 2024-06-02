@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react";
 import { useContext } from "react";
 import { GlobalContext } from "@src/Providers/GlobalContext";
 import { Skeleton } from "antd";
+import { WeatherDayCostumize } from "@src/Components/HomeComponents/WeatherByDays";
 
 export function Home() {
   const videoRef = useRef(null);
@@ -85,9 +86,14 @@ export function Home() {
             src={weather}
             className="absolute w-full z-0"
           />
-          <div className="z-10 p-12 flex justify-between">
-            <HomeWeather />
-            <WeatherByDay />
+          <div className="flex flex-col gap-12 p-12 ">
+            <div className="flex justify-between">
+              <HomeWeather />
+              <WeatherByDay />
+            </div>
+            <div className="z-10">
+              <WeatherDayCostumize />
+            </div>
           </div>
         </>
       )}

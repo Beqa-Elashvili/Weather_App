@@ -19,12 +19,12 @@ export function HomeWeather() {
     return `${hours}:${minutes}:${seconds}`;
   };
 
-  useEffect(() => {
-    const timerId = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-    return () => clearInterval(timerId);
-  }, []);
+  // useEffect(() => {
+  //   const timerId = setInterval(() => {
+  //     setCurrentTime(new Date());
+  //   }, 1000);
+  //   return () => clearInterval(timerId);
+  // }, []);
 
   function FindCurrectTime() {
     const filter = TbilisiWeather.forecast.forecastday.map((item) =>
@@ -119,18 +119,28 @@ export function HomeWeather() {
       FindCurrectTime();
     }
   }, [TbilisiWeather, currentTime]);
-
+  console.log(TbilisiWeather);
   return (
-    <div className=" flex flex-col z-10 gap-2 border-solid border border-blue-300 rounded bg-slate-100">
+    <div className="bg-blue-200 bg-opacity-50 text-white flex flex-col z-10 gap-2 border-solid border border-blue-300 rounded ">
       {TbilisiWeather !== undefined && (
         <div>
-          <div className="p-4">
-            <h1 className="text-[#15719f]">{TbilisiWeather.location.name}</h1>
-            <p className="text-[#15719f]">
-              Country: {TbilisiWeather.location.country}
-            </p>
-            <p>{formatTime(currentTime)}</p>
-            <p>{currentWeekDay}</p>
+          <div className="flex justify-between">
+            <div className="p-4">
+              <h1 className="text-[#15719f]">{TbilisiWeather.location.name}</h1>
+              <p className="text-[#15719f]">
+                Country: {TbilisiWeather.location.country}
+              </p>
+              <p>{formatTime(currentTime)}</p>
+              <p>{currentWeekDay}</p>
+            </div>
+            <div className="p-4 mr-4 text-center">
+              <p className="text-2xl text-[#3c91b8]">
+                {TbilisiWeather.current.condition.text}
+              </p>
+              <p className="text-5xl text-[#15719f] ">
+                {TbilisiWeather.current.temp_c}&deg;C
+              </p>
+            </div>
           </div>
           <div>
             <div>{getCurrentHoursWeathers()}</div>
