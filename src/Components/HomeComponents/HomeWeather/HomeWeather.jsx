@@ -1,14 +1,12 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { FiSun } from "react-icons/fi";
 import React from "react";
 import Carousel from "react-simply-carousel";
-import { useContext } from "react";
-import { GlobalContext } from "@src/Providers/GlobalContext";
+import useGlobalProvider from "@src/Providers/useGlobalProvider";
 
 export function HomeWeather() {
   const { TbilisiWeather, currentTime, setCurrentTime, currentWeekDay } =
-    useContext(GlobalContext);
+    useGlobalProvider();
   const [FilteredHours, setFilteredHours] = useState();
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
@@ -19,12 +17,12 @@ export function HomeWeather() {
     return `${hours}:${minutes}:${seconds}`;
   };
 
-  // useEffect(() => {
-  //   const timerId = setInterval(() => {
-  //     setCurrentTime(new Date());
-  //   }, 1000);
-  //   return () => clearInterval(timerId);
-  // }, []);
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timerId);
+  }, []);
 
   function FindCurrectTime() {
     const filter = TbilisiWeather.forecast.forecastday.map((item) =>
@@ -119,7 +117,7 @@ export function HomeWeather() {
       FindCurrectTime();
     }
   }, [TbilisiWeather, currentTime]);
-  console.log(TbilisiWeather);
+
   return (
     <div className="bg-blue-200 bg-opacity-50 text-white flex flex-col z-10 gap-2 border-solid border border-blue-300 rounded ">
       {TbilisiWeather !== undefined && (

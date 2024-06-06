@@ -1,9 +1,7 @@
-import { useContext } from "react";
-import { GlobalContext } from "@src/Providers/GlobalContext";
-
+import useGlobalProvider from "@src/Providers/useGlobalProvider";
 export function WeatherDayCostumize() {
-  const { TbilisiWeather, currentMonth } = useContext(GlobalContext);
-  console.log(TbilisiWeather.forecast.forecastday);
+  const { TbilisiWeather, currentMonth } = useGlobalProvider();
+
   return (
     <div className="z-10 border-solid border border-blue-300 rounded bg-slate-100">
       <div>

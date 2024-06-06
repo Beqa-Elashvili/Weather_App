@@ -1,14 +1,13 @@
 import { HomeWeather } from "@src/Components/HomeComponents/HomeWeather";
 import { WeatherByDay } from "@src/Components/HomeComponents/MainWeatherByDay";
 import { useRef, useEffect } from "react";
-import { useContext } from "react";
-import { GlobalContext } from "@src/Providers/GlobalContext";
+import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { Skeleton } from "antd";
 import { WeatherDayCostumize } from "@src/Components/HomeComponents/WeatherByDays";
 
 export function Home() {
   const videoRef = useRef(null);
-  const { currentVideo, loading } = useContext(GlobalContext);
+  const { currentVideo, loading } = useGlobalProvider();
 
   let weather = "";
 

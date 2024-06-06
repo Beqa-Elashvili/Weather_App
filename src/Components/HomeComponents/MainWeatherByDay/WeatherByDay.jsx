@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "@src/Providers/GlobalContext";
+import { useEffect, useState } from "react";
+import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { FaTemperatureHigh } from "react-icons/fa6";
 import { LuSunrise, LuSunset } from "react-icons/lu";
 const daysOfWeek = [
@@ -13,7 +13,7 @@ const daysOfWeek = [
 ];
 
 export function WeatherByDay() {
-  const { TbilisiWeather, currentMonth } = useContext(GlobalContext);
+  const { TbilisiWeather, currentMonth } = useGlobalProvider();
   const [currentDay, setCurrentDay] = useState(new Date());
   const current = currentDay.getDay();
 

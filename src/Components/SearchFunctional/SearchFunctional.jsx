@@ -1,11 +1,11 @@
 import axios from "axios";
-import { useState, useContext, useEffect } from "react";
-import { GlobalContext } from "@src/Providers/GlobalContext";
+import { useState } from "react";
+import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { HomeWeather } from "@src/Components/HomeComponents/HomeWeather";
 
 export function SearchFunction() {
   const [value, setValue] = useState("");
-  const { weathers, setWeathers } = useContext(GlobalContext);
+  const { weathers, setWeathers } = useGlobalProvider();
 
   async function getOneWeather(city) {
     try {
