@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { FaTemperatureHigh } from "react-icons/fa6";
 import { LuSunrise, LuSunset } from "react-icons/lu";
+
 const daysOfWeek = [
   "Sunday",
   "Monday",
@@ -33,62 +34,41 @@ export function WeatherByDay() {
     <div className="z-10">
       <div className="border-solid border border-blue-300 rounded bg-slate-100 p-4">
         <div className="flex gap-12">
-          {reorderedDaysOfWeek.map((day, index) => {
+          {reorderedDaysOfWeek.slice(0, 3).map((day, index) => {
+            const forecast = TbilisiWeather?.forecast?.forecastday[index];
             return (
               <div key={index}>
                 <p className="text-xl">{day}</p>
-                {TbilisiWeather !== undefined && (
+                {forecast && (
                   <>
                     <div className="flex flex-col gap-2">
                       <p>
-                        {TbilisiWeather.forecast.forecastday[index].date
-                          .split("-")
-                          .pop()}{" "}
-                        {currentMonth}
+                        {forecast.date.split("-").pop()} {currentMonth}
                       </p>
-                      <div className="mt-">
+                      <div>
                         <p>
                           <LuSunrise className="text-yellow-600" />{" "}
-                          {TbilisiWeather.forecast.forecastday[
-                            index
-                          ].astro.sunrise
-                            .split(" ")
-                            .slice(0, 1)}
+                          {forecast.astro.sunrise.split(" ").slice(0, 1)}
                         </p>
                         <p>
                           <LuSunset className="text-yellow-600" />{" "}
-                          {TbilisiWeather.forecast.forecastday[
-                            index
-                          ].astro.sunset
-                            .split(" ")
-                            .slice(0, 1)}
+                          {forecast.astro.sunset.split(" ").slice(0, 1)}
                         </p>
                       </div>
                       <div className="text-center">
                         <img
                           className="size-12"
-                          src={
-                            TbilisiWeather.forecast.forecastday[index].day
-                              .condition.icon
-                          }
+                          src={forecast.day.condition.icon}
                           alt="weather_icon"
                         />
                       </div>
                       <div className="flex">
                         <p className="flex items-center gap-1">
                           <FaTemperatureHigh className="text-yellow-500" />
-                          {
-                            TbilisiWeather.forecast.forecastday[index].day
-                              .maxtemp_c
-                          }
+                          {forecast.day.maxtemp_c}
                         </p>
                         {" - "}
-                        <p>
-                          {
-                            TbilisiWeather.forecast.forecastday[index].day
-                              .mintemp_c
-                          }
-                        </p>
+                        <p>{forecast.day.mintemp_c}</p>
                       </div>
                     </div>
                   </>
