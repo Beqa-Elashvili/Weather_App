@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 export const GlobalContext = createContext();
@@ -27,16 +27,41 @@ const monthNames = [
   "December",
 ];
 
+let Enam = [
+  { Speed: "kph", Temp: "C" },
+  { Speed: "Mph", Temp: "F" },
+];
+
 export const GlobalProvider = ({ children }) => {
   const [TbilisiWeather, setTbilisiWeather] = useState();
   const [currentWeekDay, setCurrentWeekDay] = useState("");
   const [currentMonth, setcurrentMonth] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
   const [currentVideo, setCurrentVideo] = useState("");
+  const [currentFormat, setCurrentFormat] = useState(Enam[0]);
   const [weathers, setWeathers] = useState({
     weatherData: [],
   });
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const storedSpeed = localStorage.getItem("Speed");
+    if (storedSpeed === "Kph") {
+      setCurrentFormat(Enam[0]);
+    } else {
+      setCurrentFormat(Enam[1]);
+    }
+  }, []);
+
+  const toggleFormat = useCallback(() => {
+    if (currentFormat.Speed === Enam[0].Speed) {
+      setCurrentFormat(Enam[1]);
+      localStorage.setItem("Speed", "Kph");
+    } else {
+      setCurrentFormat(Enam[0]);
+      localStorage.setItem("Speed", "Mph");
+    }
+  }, [currentFormat]);
 
   useEffect(() => {
     if (
@@ -79,7 +104,7 @@ export const GlobalProvider = ({ children }) => {
       try {
         setLoading(true);
         const resp = await axios.get(
-          "http://api.weatherapi.com/v1/forecast.json?key=91a6e75e56dc4dad8e192202241306&q=Tbilisi&days=7&aqi=no"
+          "http://api.weatherapi.com/v1/forecast.json?key=91a6e75e56dc4dad8e192202241306&q=Tbilisi&days=7&aqi=yes"
         );
         setTbilisiWeather(resp.data);
         setLoading(false);
@@ -113,6 +138,9 @@ export const GlobalProvider = ({ children }) => {
         setCurrentVideo,
         loading,
         setLoading,
+        toggleFormat,
+        currentFormat,
+        setCurrentFormat,
       }}
     >
       {children}

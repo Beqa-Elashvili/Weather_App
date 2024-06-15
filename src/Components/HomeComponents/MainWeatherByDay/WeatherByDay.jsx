@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { FaTemperatureHigh } from "react-icons/fa6";
 import { LuSunrise, LuSunset } from "react-icons/lu";
+import { IoEarth } from "react-icons/io5";
+import { LiaTemperatureHighSolid } from "react-icons/lia";
+import { FaWind } from "react-icons/fa";
 
 const daysOfWeek = [
   "Sunday",
@@ -14,7 +17,8 @@ const daysOfWeek = [
 ];
 
 export function WeatherByDay() {
-  const { TbilisiWeather, currentMonth } = useGlobalProvider();
+  const { TbilisiWeather, currentMonth, toggleFormat, currentFormat } =
+    useGlobalProvider();
   const [currentDay, setCurrentDay] = useState(new Date());
   const current = currentDay.getDay();
 
@@ -49,22 +53,54 @@ export function WeatherByDay() {
 
   return (
     <div className="z-10">
+      <button onClick={toggleFormat}>fgfh</button>
       <div className="flex gap-12">
         {reorderedDaysOfWeek.map((day, index) => {
           const forecast = TbilisiWeather?.forecast?.forecastday[index];
+          console.log(forecast);
           return (
             <div
               key={day}
-              className="border-solid border border-blue-300 p-4 rounded bg-blue-100 bg-opacity-50"
+              className="border-solid text-center text-white border border-blue-300 p-4 rounded bg-blue-100 bg-opacity-50"
             >
               <p className="text-xl">{day}</p>
               {forecast && (
                 <>
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col items-center gap-2">
                     <p>
                       {forecast.date.split("-").pop()} {currentMonth}
                     </p>
-                    <div>
+                    <div className="flex justify-between gap-1">
+                      <div className="border-solid text-center border border-blue-300 bg-blue-500 p-4 rounded-xl">
+                        <div className="flex items-center gap-1">
+                          <IoEarth />-<p>Avg Temp</p>
+                        </div>
+                        <div className="flex items-center justify-center gap-1 mt-2">
+                          {currentFormat.Speed === "kph" ? (
+                            <>
+                              <p>{forecast.day.avgtemp_c}</p>-&deg;C
+                              <LiaTemperatureHighSolid className="text-yellow-500 size-4" />
+                            </>
+                          ) : (
+                            <>
+                              <p>{forecast.day.avgtemp_f}</p>-&deg;F
+                              <LiaTemperatureHighSolid className="text-yellow-500 size-4" />
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      <div className="border-solid text-center border border-blue-300 bg-blue-500 p-4 rounded-xl">
+                        <div className="flex items-center gap-1">
+                          <FaWind />-<p>max wind</p>
+                        </div>
+                        <div className="flex items-center justify-center gap-1 mt-2">
+                          <p>{forecast.day.maxwind_kph}</p>
+                          -
+                          <LiaTemperatureHighSolid className="text-yellow-500 size-4" />
+                        </div>
+                      </div>
+                    </div>
+                    {/* <div
                       <p>
                         <LuSunrise className="text-yellow-600" />{" "}
                         {forecast.astro.sunrise.split(" ").slice(0, 1)}
@@ -73,7 +109,7 @@ export function WeatherByDay() {
                         <LuSunset className="text-yellow-600" />{" "}
                         {forecast.astro.sunset.split(" ").slice(0, 1)}
                       </p>
-                    </div>
+                    </div> */}
                     <div className="text-center">
                       <img
                         className="size-12"

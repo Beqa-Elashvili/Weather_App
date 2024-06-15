@@ -18,12 +18,12 @@ export function HomeWeather() {
     return `${hours}:${minutes}:${seconds}`;
   };
 
-  useEffect(() => {
-    const timerId = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-    return () => clearInterval(timerId);
-  }, []);
+  // useEffect(() => {
+  //   const timerId = setInterval(() => {
+  //     setCurrentTime(new Date());
+  //   }, 1000);
+  //   return () => clearInterval(timerId);
+  // }, []);
 
   function FindCurrectTime() {
     const filter = TbilisiWeather.forecast.forecastday.map((item) =>
