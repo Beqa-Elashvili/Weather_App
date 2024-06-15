@@ -5,6 +5,9 @@ import { LuSunrise, LuSunset } from "react-icons/lu";
 import { IoEarth } from "react-icons/io5";
 import { LiaTemperatureHighSolid } from "react-icons/lia";
 import { FaWind } from "react-icons/fa";
+import { FaSun } from "react-icons/fa";
+import { FiSunrise } from "react-icons/fi";
+import { FiSunset } from "react-icons/fi";
 
 const daysOfWeek = [
   "Sunday",
@@ -22,15 +25,15 @@ export function WeatherByDay() {
   const [currentDay, setCurrentDay] = useState(new Date());
   const current = currentDay.getDay();
 
-  const getNextThreeDays = () => {
-    const nextThreeDays = [];
-    for (let i = 0; i < 3; i++) {
-      nextThreeDays.push(daysOfWeek[(current + i) % 7]);
+  const getNextTwoDays = () => {
+    const nextTwoDays = [];
+    for (let i = 0; i <= 2; i++) {
+      nextTwoDays.push(daysOfWeek[(current + i) % 7]);
     }
-    return nextThreeDays;
+    return nextTwoDays;
   };
 
-  const reorderedDaysOfWeek = getNextThreeDays();
+  const reorderedDaysOfWeek = getNextTwoDays();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -57,7 +60,6 @@ export function WeatherByDay() {
       <div className="flex gap-12">
         {reorderedDaysOfWeek.map((day, index) => {
           const forecast = TbilisiWeather?.forecast?.forecastday[index];
-          console.log(forecast);
           return (
             <div
               key={day}
@@ -70,7 +72,7 @@ export function WeatherByDay() {
                     <p>
                       {forecast.date.split("-").pop()} {currentMonth}
                     </p>
-                    <div className="flex justify-between gap-1">
+                    <div className="grid grid-cols-2 gap-1">
                       <div className="border-solid text-center border border-blue-300 bg-blue-500 p-4 rounded-xl">
                         <div className="flex items-center gap-1">
                           <IoEarth />-<p>Avg Temp</p>
@@ -79,14 +81,13 @@ export function WeatherByDay() {
                           {currentFormat.Speed === "kph" ? (
                             <>
                               <p>{forecast.day.avgtemp_c}</p>-&deg;C
-                              <LiaTemperatureHighSolid className="text-yellow-500 size-4" />
                             </>
                           ) : (
                             <>
                               <p>{forecast.day.avgtemp_f}</p>-&deg;F
-                              <LiaTemperatureHighSolid className="text-yellow-500 size-4" />
                             </>
                           )}
+                          <LiaTemperatureHighSolid className="text-yellow-500 size-4" />
                         </div>
                       </div>
                       <div className="border-solid text-center border border-blue-300 bg-blue-500 p-4 rounded-xl">
@@ -94,13 +95,41 @@ export function WeatherByDay() {
                           <FaWind />-<p>max wind</p>
                         </div>
                         <div className="flex items-center justify-center gap-1 mt-2">
-                          <p>{forecast.day.maxwind_kph}</p>
-                          -
-                          <LiaTemperatureHighSolid className="text-yellow-500 size-4" />
+                          {currentFormat.Speed === "kph" ? (
+                            <p>{forecast.day.maxwind_kph}-Kph</p>
+                          ) : (
+                            <p>{forecast.day.maxwind_mph}-Mph</p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="border-solid text-center border border-blue-300 bg-blue-500 p-4 rounded-xl">
+                        <div className="flex items-center gap-1">
+                          <FaSun />-<p>MaxTemp</p>
+                        </div>
+                        <div className="flex items-center justify-center gap-1 mt-2">
+                          {currentFormat.Speed === "kph" ? (
+                            <p>{forecast.day.maxtemp_c}-&deg;C</p>
+                          ) : (
+                            <p>{forecast.day.maxtemp_f}-&deg;F</p>
+                          )}
+                          <FaSun className="text-yellow-500 size-4" />
+                        </div>
+                      </div>
+                      <div className="border-solid text-center border border-blue-300 bg-blue-500 p-4 rounded-xl">
+                        <div className="flex items-center gap-1">
+                          <FaSun />-<p>MinTemp</p>
+                        </div>
+                        <div className="flex items-center justify-center gap-1 mt-2">
+                          {currentFormat.Speed === "kph" ? (
+                            <p>{forecast.day.mintemp_c}-&deg;C</p>
+                          ) : (
+                            <p>{forecast.day.mintemp_f}-&deg;F</p>
+                          )}
+                          <FaSun className="text-yellow-500 size-4" />
                         </div>
                       </div>
                     </div>
-                    {/* <div
+                    {/* <div>
                       <p>
                         <LuSunrise className="text-yellow-600" />{" "}
                         {forecast.astro.sunrise.split(" ").slice(0, 1)}
@@ -117,13 +146,18 @@ export function WeatherByDay() {
                         alt="weather_icon"
                       />
                     </div>
-                    <div className="flex">
-                      <p className="flex items-center gap-1">
-                        <FaTemperatureHigh className="text-yellow-500" />
-                        {forecast.day.maxtemp_c}
-                      </p>
-                      {" - "}
-                      <p>{forecast.day.mintemp_c}</p>
+                    <div className="text-center w-full">
+                      <div className="flex justify-around w-full">
+                        <div>
+                          <p>{forecast.astro.sunrise}</p>
+                          <FiSunrise className="text-orange-500" />
+                        </div>
+                        <div>
+                          <p>{forecast.astro.sunset}</p>
+                          <FiSunset className="text-orange-500" />
+                        </div>
+                      </div>
+                      <p className="bg-yellow-200 h-px"></p>
                     </div>
                   </div>
                 </>

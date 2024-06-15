@@ -6,8 +6,13 @@ import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { FaArrowLeft } from "react-icons/fa6";
 
 export function HomeWeather() {
-  const { TbilisiWeather, currentTime, setCurrentTime, currentWeekDay } =
-    useGlobalProvider();
+  const {
+    TbilisiWeather,
+    currentTime,
+    setCurrentTime,
+    currentWeekDay,
+    currentFormat,
+  } = useGlobalProvider();
   const [FilteredHours, setFilteredHours] = useState();
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
@@ -18,12 +23,12 @@ export function HomeWeather() {
     return `${hours}:${minutes}:${seconds}`;
   };
 
-  // useEffect(() => {
-  //   const timerId = setInterval(() => {
-  //     setCurrentTime(new Date());
-  //   }, 1000);
-  //   return () => clearInterval(timerId);
-  // }, []);
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timerId);
+  }, []);
 
   function FindCurrectTime() {
     const filter = TbilisiWeather.forecast.forecastday.map((item) =>
@@ -102,7 +107,11 @@ export function HomeWeather() {
               <div className="flex">
                 <FiSun className="mr-1 mt-1 text-yellow-400" />
                 <div>
-                  <p>{hour.temp_c} &deg;C</p>
+                  {currentFormat.Speed === "kph" ? (
+                    <p>{hour.temp_c}&deg;C</p>
+                  ) : (
+                    <p>{hour.temp_f}&deg;F</p>
+                  )}
                   <p>{hour.time.split(" ")[1]}</p>
                 </div>
               </div>
@@ -120,7 +129,7 @@ export function HomeWeather() {
   }, [TbilisiWeather, currentTime]);
 
   return (
-    <div className="bg-blue-200 bg-opacity-50 text-white flex flex-col z-10 gap-2 border-solid border border-blue-300 rounded">
+    <div className="bg-blue-200  bg-opacity-50 text-white flex flex-col z-10 gap-2 border-solid border border-blue-300 rounded">
       {TbilisiWeather !== undefined && (
         <div>
           <div className="flex justify-between">
@@ -136,9 +145,15 @@ export function HomeWeather() {
               <p className="text-2xl text-[#3c91b8]">
                 {TbilisiWeather.current.condition.text}
               </p>
-              <p className="text-5xl text-[#15719f] ">
-                {TbilisiWeather.current.temp_c}&deg;C
-              </p>
+              {currentFormat.Speed === "kph" ? (
+                <p className="text-5xl text-[#15719f] ">
+                  {TbilisiWeather.current.temp_c}&deg;C
+                </p>
+              ) : (
+                <p className="text-5xl text-[#15719f] ">
+                  {TbilisiWeather.current.temp_f}&deg;F
+                </p>
+              )}
             </div>
           </div>
           <div>

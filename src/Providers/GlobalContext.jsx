@@ -48,7 +48,8 @@ export const GlobalProvider = ({ children }) => {
     const storedSpeed = localStorage.getItem("Speed");
     if (storedSpeed === "Kph") {
       setCurrentFormat(Enam[0]);
-    } else {
+    }
+    if (storedSpeed === "Mph") {
       setCurrentFormat(Enam[1]);
     }
   }, []);
@@ -56,10 +57,10 @@ export const GlobalProvider = ({ children }) => {
   const toggleFormat = useCallback(() => {
     if (currentFormat.Speed === Enam[0].Speed) {
       setCurrentFormat(Enam[1]);
-      localStorage.setItem("Speed", "Kph");
+      localStorage.setItem("Speed", "Mph");
     } else {
       setCurrentFormat(Enam[0]);
-      localStorage.setItem("Speed", "Mph");
+      localStorage.setItem("Speed", "Kpm");
     }
   }, [currentFormat]);
 

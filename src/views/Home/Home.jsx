@@ -86,7 +86,7 @@ export function Home() {
             className="absolute w-full z-0"
           />
           <div className="flex flex-col gap-12 p-12 ">
-            <div className="flex justify-between">
+            <div className="flex items-start justify-between">
               <HomeWeather />
               <WeatherByDay />
             </div>
