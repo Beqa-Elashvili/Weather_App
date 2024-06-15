@@ -3,6 +3,7 @@ import { FiSun } from "react-icons/fi";
 import React from "react";
 import Carousel from "react-simply-carousel";
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export function HomeWeather() {
   const { TbilisiWeather, currentTime, setCurrentTime, currentWeekDay } =
@@ -119,7 +120,7 @@ export function HomeWeather() {
   }, [TbilisiWeather, currentTime]);
 
   return (
-    <div className="bg-blue-200 bg-opacity-50 text-white flex flex-col z-10 gap-2 border-solid border border-blue-300 rounded ">
+    <div className="bg-blue-200 bg-opacity-50 text-white flex flex-col z-10 gap-2 border-solid border border-blue-300 rounded">
       {TbilisiWeather !== undefined && (
         <div>
           <div className="flex justify-between">
@@ -141,6 +142,12 @@ export function HomeWeather() {
             </div>
           </div>
           <div>
+            <div
+              className="cursor-pointer z-10 text-end mr-2"
+              onClick={() => setActiveSlideIndex(0)}
+            >
+              <FaArrowLeft className="text-[#15719f] size-6" />
+            </div>
             <div>{getCurrentHoursWeathers()}</div>
           </div>
         </div>
