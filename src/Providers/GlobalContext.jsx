@@ -39,6 +39,8 @@ export const GlobalProvider = ({ children }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [currentVideo, setCurrentVideo] = useState("");
   const [currentFormat, setCurrentFormat] = useState(Enam[0]);
+  const [currentDay, setCurrentDay] = useState(new Date());
+
   const [weathers, setWeathers] = useState({
     weatherData: [],
   });
@@ -65,33 +67,25 @@ export const GlobalProvider = ({ children }) => {
   }, [currentFormat]);
 
   useEffect(() => {
-    if (
-      TbilisiWeather?.current.condition.text === "Sunny" ||
-      TbilisiWeather?.current.condition.text === "Partly cloudy"
-    ) {
+    const mainVideo = TbilisiWeather?.current.condition.text;
+    if (mainVideo === "Sunny" || mainVideo === "Partly cloudy") {
       setCurrentVideo("good");
       return;
     }
-    if (
-      TbilisiWeather?.current.condition.text === "Patchy rain nearby" ||
-      TbilisiWeather?.current.condition.text === "Cloudy"
-    ) {
+    if (mainVideo === "Patchy rain nearby" || mainVideo === "Cloudy") {
       setCurrentVideo("middle");
       return;
-    } else if (TbilisiWeather?.current.condition.text === "Moderate rain") {
+    } else if (mainVideo === "Moderate rain") {
       setCurrentVideo("bad");
       return;
-    } else if (
-      TbilisiWeather?.current.condition.text === "Mist" ||
-      TbilisiWeather?.current.condition.text === "Overcast"
-    ) {
+    } else if (mainVideo === "Mist" || mainVideo === "Overcast") {
       setCurrentVideo("mist");
       return;
     } else if (
-      TbilisiWeather?.current.condition.text === "Blowing snow" ||
-      TbilisiWeather?.current.condition.text === "Blizzard" ||
-      TbilisiWeather?.current.condition.text === "Moderate snow" ||
-      TbilisiWeather?.current.condition.text === "Light Snow"
+      mainVideo === "Blowing snow" ||
+      mainVideo === "Blizzard" ||
+      mainVideo === "Moderate snow" ||
+      mainVideo === "Light Snow"
     ) {
       setCurrentVideo("high snow");
       return;
@@ -105,7 +99,7 @@ export const GlobalProvider = ({ children }) => {
       try {
         setLoading(true);
         const resp = await axios.get(
-          "http://api.weatherapi.com/v1/forecast.json?key=91a6e75e56dc4dad8e192202241306&q=Tbilisi&days=7&aqi=yes"
+          "http://api.weatherapi.com/v1/forecast.json?key=91a6e75e56dc4dad8e192202241306&lang=fr&q=Tbilisi&days=7&aqi=yes"
         );
         setTbilisiWeather(resp.data);
         setLoading(false);
@@ -142,6 +136,8 @@ export const GlobalProvider = ({ children }) => {
         toggleFormat,
         currentFormat,
         setCurrentFormat,
+        currentDay,
+        setCurrentDay,
       }}
     >
       {children}

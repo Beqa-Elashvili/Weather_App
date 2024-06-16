@@ -8,6 +8,7 @@ import { FaWind } from "react-icons/fa";
 import { FaSun } from "react-icons/fa";
 import { FiSunrise } from "react-icons/fi";
 import { FiSunset } from "react-icons/fi";
+import axios from "axios";
 
 const daysOfWeek = [
   "Sunday",
@@ -20,9 +21,14 @@ const daysOfWeek = [
 ];
 
 export function WeatherByDay() {
-  const { TbilisiWeather, currentMonth, toggleFormat, currentFormat } =
-    useGlobalProvider();
-  const [currentDay, setCurrentDay] = useState(new Date());
+  const {
+    TbilisiWeather,
+    currentMonth,
+    toggleFormat,
+    currentFormat,
+    currentDay,
+    setCurrentDay,
+  } = useGlobalProvider();
   const current = currentDay.getDay();
 
   const getNextTwoDays = () => {
@@ -34,25 +40,6 @@ export function WeatherByDay() {
   };
 
   const reorderedDaysOfWeek = getNextTwoDays();
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentDay(new Date());
-    }, 60000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // const [other, setOther] = useState();
-
-  // useEffect(() => {
-  //   async function getOther() {
-  //     const resp = await axios.get(
-  //       "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/tbilisi?include=fcst%2Cobs%2Chistfcst%2Cstats%2Cdays%2Chours%2Ccurrent%2Calerts&key=UZX2S8964NKCR42RGD2KYW4WG&options=beta&contentType=json"
-  //     );
-  //     setOther(resp.data);
-  //   }
-  //   getOther();
-  // }, []);
 
   return (
     <div className="z-10">
@@ -68,6 +55,7 @@ export function WeatherByDay() {
               <p className="text-xl">{day}</p>
               {forecast && (
                 <>
+                  {console.log(forecast.day.condition.icon)}
                   <div className="flex flex-col items-center gap-2">
                     <p>
                       {forecast.date.split("-").pop()} {currentMonth}
