@@ -107,10 +107,8 @@ export function WeatherDayCostumize() {
           >
             <img src={getIcons(item.icon)} alt="weather icon" />
             <div className="flex gap-1 justify-center">
-              {currentData}
-              <span>
-                <p>{currentMonth}</p>
-              </span>
+              <p>{item.datetime.split("-").pop()}</p>
+              <p>{currentMonth}</p>
             </div>
           </div>
         ))}

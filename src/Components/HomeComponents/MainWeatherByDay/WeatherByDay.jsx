@@ -43,7 +43,6 @@ export function WeatherByDay() {
 
   return (
     <div className="z-10">
-      <button onClick={toggleFormat}>fgfh</button>
       <div className="flex gap-12">
         {reorderedDaysOfWeek.map((day, index) => {
           const forecast = TbilisiWeather?.forecast?.forecastday[index];
@@ -55,7 +54,6 @@ export function WeatherByDay() {
               <p className="text-xl">{day}</p>
               {forecast && (
                 <>
-                  {console.log(forecast.day.condition.icon)}
                   <div className="flex flex-col items-center gap-2">
                     <p>
                       {forecast.date.split("-").pop()} {currentMonth}
@@ -117,16 +115,7 @@ export function WeatherByDay() {
                         </div>
                       </div>
                     </div>
-                    {/* <div>
-                      <p>
-                        <LuSunrise className="text-yellow-600" />{" "}
-                        {forecast.astro.sunrise.split(" ").slice(0, 1)}
-                      </p>
-                      <p>
-                        <LuSunset className="text-yellow-600" />{" "}
-                        {forecast.astro.sunset.split(" ").slice(0, 1)}
-                      </p>
-                    </div> */}
+
                     <div className="text-center">
                       <img
                         className="size-12"

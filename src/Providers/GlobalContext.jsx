@@ -99,7 +99,7 @@ export const GlobalProvider = ({ children }) => {
       try {
         setLoading(true);
         const resp = await axios.get(
-          "http://api.weatherapi.com/v1/forecast.json?key=91a6e75e56dc4dad8e192202241306&lang=fr&q=Tbilisi&days=7&aqi=yes"
+          "http://api.weatherapi.com/v1/forecast.json?key=91a6e75e56dc4dad8e192202241306&lang=en&q=Tbilisi&days=7&aqi=yes"
         );
         setTbilisiWeather(resp.data);
         setLoading(false);
