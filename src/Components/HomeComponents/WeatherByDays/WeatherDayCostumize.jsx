@@ -6,7 +6,6 @@ export function WeatherDayCostumize() {
   const { TbilisiWeather, currentMonth, currentDay } = useGlobalProvider();
   const currentData = currentDay.getDate();
   const [currentWeathers, setCurrentWeathers] = useState();
-  console.log(TbilisiWeather?.forecast.forecastday.map((item) => item.hour));
 
   useEffect(() => {
     async function getOther() {

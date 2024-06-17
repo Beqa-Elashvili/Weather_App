@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import useToken from "antd/es/theme/useToken";
 
 export const GlobalContext = createContext();
 
@@ -40,6 +41,7 @@ export const GlobalProvider = ({ children }) => {
   const [currentVideo, setCurrentVideo] = useState("");
   const [currentFormat, setCurrentFormat] = useState(Enam[0]);
   const [currentDay, setCurrentDay] = useState(new Date());
+  const [letCurrent, setLetCurrent] = useState("Tbilisi");
 
   const [weathers, setWeathers] = useState({
     weatherData: [],
@@ -94,21 +96,22 @@ export const GlobalProvider = ({ children }) => {
     }
   }, [TbilisiWeather?.current.condition.text]);
 
-  useEffect(() => {
-    async function GetTbilisiWeather() {
-      try {
-        setLoading(true);
-        const resp = await axios.get(
-          "http://api.weatherapi.com/v1/forecast.json?key=91a6e75e56dc4dad8e192202241306&lang=en&q=Tbilisi&days=7&aqi=yes"
-        );
-        setTbilisiWeather(resp.data);
-        setLoading(false);
-      } catch (error) {
-        alert("fetch wether data failed");
-      } finally {
-        setLoading(false);
-      }
+  async function GetTbilisiWeather() {
+    try {
+      setLoading(true);
+      const resp = await axios.get(
+        `http://api.weatherapi.com/v1/forecast.json?key=91a6e75e56dc4dad8e192202241306&lang=en&q=${letCurrent}&days=7&aqi=yes`
+      );
+      setTbilisiWeather(resp.data);
+      setLoading(false);
+    } catch (error) {
+      alert("fetch wether data failed");
+    } finally {
+      setLoading(false);
     }
+  }
+
+  useEffect(() => {
     const current = currentTime.getDay();
     const currentMonth = currentTime.getMonth();
     GetTbilisiWeather();
@@ -138,6 +141,9 @@ export const GlobalProvider = ({ children }) => {
         setCurrentFormat,
         currentDay,
         setCurrentDay,
+        letCurrent,
+        setLetCurrent,
+        GetTbilisiWeather,
       }}
     >
       {children}
