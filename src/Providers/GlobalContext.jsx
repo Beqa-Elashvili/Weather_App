@@ -41,7 +41,6 @@ export const GlobalProvider = ({ children }) => {
   const [currentVideo, setCurrentVideo] = useState("");
   const [currentFormat, setCurrentFormat] = useState(Enam[0]);
   const [currentDay, setCurrentDay] = useState(new Date());
-  const [letCurrent, setLetCurrent] = useState("Tbilisi");
 
   const [weathers, setWeathers] = useState({
     weatherData: [],
@@ -96,13 +95,15 @@ export const GlobalProvider = ({ children }) => {
     }
   }, [TbilisiWeather?.current.condition.text]);
 
-  async function GetTbilisiWeather() {
+  async function GetTbilisiWeather(City) {
     try {
       setLoading(true);
       const resp = await axios.get(
-        `http://api.weatherapi.com/v1/forecast.json?key=91a6e75e56dc4dad8e192202241306&lang=en&q=${letCurrent}&days=7&aqi=yes`
+        `http://api.weatherapi.com/v1/forecast.json?key=91a6e75e56dc4dad8e192202241306&lang=en&q=${City}&days=7&aqi=yes`
       );
       setTbilisiWeather(resp.data);
+      const timeZone = resp.data.location.tz_id;
+      console.log(`Time Zone for ${City}: ${timeZone}`);
       setLoading(false);
     } catch (error) {
       alert("fetch wether data failed");
@@ -110,11 +111,12 @@ export const GlobalProvider = ({ children }) => {
       setLoading(false);
     }
   }
+  console.log(TbilisiWeather);
 
   useEffect(() => {
     const current = currentTime.getDay();
     const currentMonth = currentTime.getMonth();
-    GetTbilisiWeather();
+    GetTbilisiWeather("Tbilisi");
     setCurrentWeekDay(daysOfWeek[current]);
     setcurrentMonth(monthNames[currentMonth]);
   }, [currentTime.toString()[8], currentTime.toString()[9]]);
@@ -141,8 +143,6 @@ export const GlobalProvider = ({ children }) => {
         setCurrentFormat,
         currentDay,
         setCurrentDay,
-        letCurrent,
-        setLetCurrent,
         GetTbilisiWeather,
       }}
     >
