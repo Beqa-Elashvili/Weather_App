@@ -73,7 +73,11 @@ export const GlobalProvider = ({ children }) => {
       setCurrentVideo("good");
       return;
     }
-    if (mainVideo === "Patchy rain nearby" || mainVideo === "Cloudy") {
+    if (
+      mainVideo === "Patchy rain nearby" ||
+      mainVideo === "Cloudy" ||
+      mainVideo === "Moderate rain at times"
+    ) {
       setCurrentVideo("middle");
       return;
     } else if (mainVideo === "Moderate rain") {

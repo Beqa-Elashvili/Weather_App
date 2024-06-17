@@ -142,7 +142,7 @@ export function HomeWeather() {
               <p>{currentWeekDay}</p>
             </div>
             <div className="p-4 mr-4 text-center">
-              <p className="text-2xl max-w-40text-[#3c91b8]">
+              <p className="text-2xl max-w-40 text-[#3c91b8]">
                 {TbilisiWeather.current.condition.text}
               </p>
               {currentFormat.Speed === "kph" ? (
