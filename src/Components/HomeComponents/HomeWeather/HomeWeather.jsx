@@ -12,6 +12,7 @@ export function HomeWeather() {
     setCurrentTime,
     currentWeekDay,
     currentFormat,
+    timeZone,
   } = useGlobalProvider();
   const [FilteredHours, setFilteredHours] = useState();
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
@@ -24,11 +25,19 @@ export function HomeWeather() {
   };
 
   useEffect(() => {
-    const timerId = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-    return () => clearInterval(timerId);
-  }, []);
+    if (timeZone) {
+      const updateTime = () => {
+        const utcDate = new Date();
+        const localDate = new Date(
+          utcDate.toLocaleString("en-US", { timeZone })
+        );
+        setCurrentTime(localDate);
+      };
+      updateTime();
+      const timerId = setInterval(updateTime, 1000);
+      return () => clearInterval(timerId);
+    }
+  }, [timeZone]);
 
   function FindCurrectTime() {
     const filter = TbilisiWeather.forecast.forecastday.map((item) =>
@@ -129,13 +138,13 @@ export function HomeWeather() {
   }, [TbilisiWeather, currentTime]);
 
   return (
-    <div className="bg-blue-200  bg-opacity-50 text-white flex flex-col z-10 gap-2 border-solid border border-blue-300 rounded">
+    <div className="bg-blue-200  bg-opacity-50 text-white flex flex-col z-10 gap-2 border-solid border border-blue-300 rounded max-w-[400px]">
       {TbilisiWeather !== undefined && (
         <div>
           <div className="flex justify-between">
             <div className="p-4">
-              <h1 className="text-[#15719f]">{TbilisiWeather.location.name}</h1>
-              <p className="text-[#15719f]">
+              <h1 className="text-[#15719f] max-w-48">{TbilisiWeather.location.name}</h1>
+              <p className="text-[#15719f] text-balance">
                 Country: {TbilisiWeather.location.country}
               </p>
               <p>{formatTime(currentTime)}</p>

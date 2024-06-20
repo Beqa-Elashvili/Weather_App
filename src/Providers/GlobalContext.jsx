@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import useToken from "antd/es/theme/useToken";
+import { useRef } from "react";
 
 export const GlobalContext = createContext();
 
@@ -76,11 +77,16 @@ export const GlobalProvider = ({ children }) => {
     if (
       mainVideo === "Patchy rain nearby" ||
       mainVideo === "Cloudy" ||
-      mainVideo === "Moderate rain at times"
+      mainVideo === "Moderate rain at times" ||
+      mainVideo === "Thundery outbreaks in nearby" ||
+      mainVideo === "Moderate or heavy rain with thunder"
     ) {
       setCurrentVideo("middle");
       return;
-    } else if (mainVideo === "Moderate rain") {
+    } else if (
+      mainVideo === "Moderate rain" ||
+      mainVideo === "Moderate or heavy rain shower"
+    ) {
       setCurrentVideo("bad");
       return;
     } else if (mainVideo === "Mist" || mainVideo === "Overcast") {
@@ -98,6 +104,7 @@ export const GlobalProvider = ({ children }) => {
       setCurrentVideo("good");
     }
   }, [TbilisiWeather?.current.condition.text]);
+  const [timeZone, setTimeZone] = useState("");
 
   async function GetTbilisiWeather(City) {
     try {
@@ -107,6 +114,7 @@ export const GlobalProvider = ({ children }) => {
       );
       setTbilisiWeather(resp.data);
       const timeZone = resp.data.location.tz_id;
+      setTimeZone(timeZone);
       console.log(`Time Zone for ${City}: ${timeZone}`);
       setLoading(false);
     } catch (error) {
@@ -115,7 +123,6 @@ export const GlobalProvider = ({ children }) => {
       setLoading(false);
     }
   }
-  console.log(TbilisiWeather);
 
   useEffect(() => {
     const current = currentTime.getDay();
@@ -124,6 +131,33 @@ export const GlobalProvider = ({ children }) => {
     setCurrentWeekDay(daysOfWeek[current]);
     setcurrentMonth(monthNames[currentMonth]);
   }, [currentTime.toString()[8], currentTime.toString()[9]]);
+
+  const videoRef = useRef(null);
+  let weather = "";
+
+  switch (currentVideo) {
+    case "good":
+      weather = "./videos/good weather.mp4";
+      break;
+    case "middle":
+      weather = "./videos/middle weather.mp4";
+      break;
+    case "bad":
+      weather = "./videos/bad weather.mp4";
+      break;
+    case "mist":
+      weather = "./videos/mist weather.mp4";
+      break;
+    case "high snow":
+      weather = "./videos/high snow.mp4";
+  }
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (videoElement) {
+      videoElement.play();
+    }
+  }, []);
 
   return (
     <GlobalContext.Provider
@@ -139,7 +173,10 @@ export const GlobalProvider = ({ children }) => {
         currentMonth,
         setcurrentMonth,
         currentVideo,
+        weather,
         setCurrentVideo,
+        timeZone,
+        setTimeZone,
         loading,
         setLoading,
         toggleFormat,

@@ -43,13 +43,13 @@ export function WeatherByDay() {
 
   return (
     <div className="z-10">
-      <div className="flex gap-12">
+      <div className="flex gap-12 bg-blue- bg-opacity-50">
         {reorderedDaysOfWeek.map((day, index) => {
           const forecast = TbilisiWeather?.forecast?.forecastday[index];
           return (
             <div
               key={day}
-              className="border-solid text-center text-white border border-blue-300 p-4 rounded bg-blue-100 bg-opacity-50"
+              className="text-center text-white bg-blue-100 bg-opacity-50  border-x-1 border-solid	 border border-y-0 border-blue-300 p-4"
             >
               <p className="text-xl">{day}</p>
               {forecast && (

@@ -7,33 +7,7 @@ import { WeatherDayCostumize } from "@src/Components/HomeComponents/WeatherByDay
 
 export function Home() {
   const videoRef = useRef(null);
-  const { currentVideo, loading } = useGlobalProvider();
-
-  let weather = "";
-
-  switch (currentVideo) {
-    case "good":
-      weather = "./videos/good weather.mp4";
-      break;
-    case "middle":
-      weather = "./videos/middle weather.mp4";
-      break;
-    case "bad":
-      weather = "./videos/bad weather.mp4";
-      break;
-    case "mist":
-      weather = "./videos/mist weather.mp4";
-      break;
-    case "high snow":
-      weather = "./videos/high snow.mp4";
-  }
-
-  useEffect(() => {
-    const videoElement = videoRef.current;
-    if (videoElement) {
-      videoElement.play();
-    }
-  }, []);
+  const { loading, weather } = useGlobalProvider();
   const SkeletonArray = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
 
   return (
