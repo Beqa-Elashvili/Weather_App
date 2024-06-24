@@ -1,25 +1,36 @@
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { LiaTemperatureHighSolid } from "react-icons/lia";
+import { FaWind } from "react-icons/fa";
+import { FcElectricity } from "react-icons/fc";
 
 export function WeatherDayCostumize() {
-  const { TbilisiWeather, currentMonth, currentDay } = useGlobalProvider();
-  const currentData = currentDay.getDate();
+  const { currentDay, currentFormat, handleCurrentMonth } = useGlobalProvider();
   const [currentWeathers, setCurrentWeathers] = useState();
+
+  const startDate = new Date(currentDay);
+  startDate.setDate(currentDay.getDate() + 3);
+  const endDate = new Date(currentDay);
+  endDate.setDate(currentDay.getDate() + 9);
+
+  const formattedStartDate = startDate.toISOString().split("T")[0];
+  const formattedEndDate = endDate.toISOString().split("T")[0];
 
   useEffect(() => {
     async function getOther() {
-      const resp = await axios.get(
-        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Tbilisi/2024-06-${
-          currentData + 3
-        }/2024-06-${
-          currentData + 9
-        }?unitGroup=metric&key=UZX2S8964NKCR42RGD2KYW4WG&contentType=json`
-      );
-      setCurrentWeathers(resp.data.days);
+      try {
+        const handleFormat = currentFormat.Speed === "kph" ? "metric" : "us";
+        const resp = await axios.get(
+          `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Tbilisi/${formattedStartDate}/${formattedEndDate}?unitGroup=${handleFormat}&key=UZX2S8964NKCR42RGD2KYW4WG&contentType=json`
+        );
+        setCurrentWeathers(resp.data.days);
+      } catch (error) {
+        console.error(error);
+      }
     }
     getOther();
-  }, []);
+  }, [currentFormat]);
 
   let icon = "";
   const getIcons = (item) => {
@@ -98,19 +109,74 @@ export function WeatherDayCostumize() {
 
   return (
     <div>
-      <div className="grid grid-cols-7 text-center gap-5">
-        {currentWeathers?.map((item, index) => (
-          <div
-            className="z-10 border-solid border border-blue-300 rounded bg-blue-200 bg-opacity-50"
-            key={index}
-          >
-            <img src={getIcons(item.icon)} alt="weather icon" />
-            <div className="flex gap-1 justify-center">
-              <p>{item.datetime.split("-").pop()}</p>
-              <p>{currentMonth}</p>
+      <div className="grid grid-cols-7 text-center gap-2">
+        {currentWeathers?.map((item, index) => {
+          return (
+            <div
+              className="z-10 border-solid border border-blue-300 rounded bg-blue-200 bg-opacity-50 p-1"
+              key={index}
+            >
+              <img src={getIcons(item.icon)} alt="weather icon" />
+              <div className="flex gap-1 justify-center">
+                <p>{handleCurrentMonth(item.datetime)}</p>
+              </div>
+              <div className="flex items-center justify-around  text-blue-600 text-lg">
+                <div className="flex flex-col items-center">
+                  <div className="flex items-center gap-2">
+                    <p>Feel</p>
+                    <LiaTemperatureHighSolid className="text-orange-500" />
+                  </div>
+                  <div className="border-solid bg-white w-[90px] border-blue-300 p-1 border rounded-xl flex items-center justify-center">
+                    {currentFormat.Speed === "kph" ? (
+                      <p>
+                        {item.feelslike}{" "}
+                        <span className="text-orange-500 text-sm">&deg;C</span>
+                      </p>
+                    ) : (
+                      <p>
+                        {item.feelslike}{" "}
+                        <span className="text-orange-500 text-sm">&deg;F</span>
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div className="flex flex-col items-center">
+                  <p className="flex items-center gap-2">
+                    Wind
+                    <FaWind className="text-white" />
+                  </p>
+                  <div className="border-solid bg-white w-[90px]  p-1 border-blue-300 border rounded-xl flex items-center justify-center">
+                    {currentFormat.Speed === "kph" ? (
+                      <p>
+                        {item.windspeed}{" "}
+                        <span className="text-orange-500 text-sm">Kph</span>
+                      </p>
+                    ) : (
+                      <p>
+                        {item.windspeed}{" "}
+                        <span className="text-orange-500 text-sm"> Mph</span>
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-between gap-1">
+                <p className="mt-2 text-blue-600 border-solid bg-white p-2 rounded-full text-lg w-20 h-20   flex items-center justify-center border border-blue-500 float-start">
+                  {item.temp}{" "}
+                  {currentFormat.Speed === "kph" ? (
+                    <span className="text-orange-500 ml-2">C&deg;</span>
+                  ) : (
+                    <span className="text-orange-500 ml-2">F&deg;</span>
+                  )}
+                </p>
+                <div className="mt-2 w-24 flex gap-2  text-blue-600 border-solid bg-white p-2 rounded-lg  flex items-center justify-center border border-blue-500">
+                  <FcElectricity className="size-8" />
+                  <p>{item.solarenergy}</p>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

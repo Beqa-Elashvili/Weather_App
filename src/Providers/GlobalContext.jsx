@@ -14,20 +14,6 @@ const daysOfWeek = [
   "Friday",
   "Saturday",
 ];
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
 
 let Enam = [
   { Speed: "kph", Temp: "C" },
@@ -37,7 +23,6 @@ let Enam = [
 export const GlobalProvider = ({ children }) => {
   const [TbilisiWeather, setTbilisiWeather] = useState();
   const [currentWeekDay, setCurrentWeekDay] = useState("");
-  const [currentMonth, setcurrentMonth] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
   const [currentVideo, setCurrentVideo] = useState("");
   const [currentFormat, setCurrentFormat] = useState(Enam[0]);
@@ -47,6 +32,30 @@ export const GlobalProvider = ({ children }) => {
     weatherData: [],
   });
   const [loading, setLoading] = useState(true);
+
+  const getMonthName = (date) => {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    return months[date.getMonth()];
+  };
+
+  const handleCurrentMonth = (day) => {
+    const itemDate = new Date(day);
+    const formattedDate = `${getMonthName(itemDate)} ${itemDate.getDate()}`;
+    return formattedDate;
+  };
 
   useEffect(() => {
     const storedSpeed = localStorage.getItem("Speed");
@@ -115,7 +124,6 @@ export const GlobalProvider = ({ children }) => {
       setTbilisiWeather(resp.data);
       const timeZone = resp.data.location.tz_id;
       setTimeZone(timeZone);
-      console.log(`Time Zone for ${City}: ${timeZone}`);
       setLoading(false);
     } catch (error) {
       alert("fetch wether data failed");
@@ -126,10 +134,8 @@ export const GlobalProvider = ({ children }) => {
 
   useEffect(() => {
     const current = currentTime.getDay();
-    const currentMonth = currentTime.getMonth();
     GetTbilisiWeather("Tbilisi");
     setCurrentWeekDay(daysOfWeek[current]);
-    setcurrentMonth(monthNames[currentMonth]);
   }, [currentTime.toString()[8], currentTime.toString()[9]]);
 
   const videoRef = useRef(null);
@@ -170,8 +176,6 @@ export const GlobalProvider = ({ children }) => {
         setCurrentTime,
         currentWeekDay,
         setCurrentWeekDay,
-        currentMonth,
-        setcurrentMonth,
         currentVideo,
         weather,
         setCurrentVideo,
@@ -185,6 +189,7 @@ export const GlobalProvider = ({ children }) => {
         currentDay,
         setCurrentDay,
         GetTbilisiWeather,
+        handleCurrentMonth,
       }}
     >
       {children}

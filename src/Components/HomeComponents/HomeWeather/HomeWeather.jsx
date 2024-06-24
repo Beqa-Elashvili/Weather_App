@@ -143,7 +143,9 @@ export function HomeWeather() {
         <div>
           <div className="flex justify-between">
             <div className="p-4">
-              <h1 className="text-[#15719f] max-w-48">{TbilisiWeather.location.name}</h1>
+              <h1 className="text-[#15719f] max-w-48">
+                {TbilisiWeather.location.name}
+              </h1>
               <p className="text-[#15719f] text-balance">
                 Country: {TbilisiWeather.location.country}
               </p>

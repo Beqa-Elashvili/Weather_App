@@ -1,14 +1,10 @@
-import { useEffect, useState } from "react";
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
-import { FaTemperatureHigh } from "react-icons/fa6";
-import { LuSunrise, LuSunset } from "react-icons/lu";
 import { IoEarth } from "react-icons/io5";
 import { LiaTemperatureHighSolid } from "react-icons/lia";
 import { FaWind } from "react-icons/fa";
 import { FaSun } from "react-icons/fa";
 import { FiSunrise } from "react-icons/fi";
 import { FiSunset } from "react-icons/fi";
-import axios from "axios";
 
 const daysOfWeek = [
   "Sunday",
@@ -23,14 +19,11 @@ const daysOfWeek = [
 export function WeatherByDay() {
   const {
     TbilisiWeather,
-    currentMonth,
-    toggleFormat,
     currentFormat,
     currentDay,
-    setCurrentDay,
+    handleCurrentMonth,
   } = useGlobalProvider();
   const current = currentDay.getDay();
-
   const getNextTwoDays = () => {
     const nextTwoDays = [];
     for (let i = 0; i <= 2; i++) {
@@ -38,7 +31,6 @@ export function WeatherByDay() {
     }
     return nextTwoDays;
   };
-
   const reorderedDaysOfWeek = getNextTwoDays();
 
   return (
@@ -55,9 +47,7 @@ export function WeatherByDay() {
               {forecast && (
                 <>
                   <div className="flex flex-col items-center gap-2">
-                    <p>
-                      {forecast.date.split("-").pop()} {currentMonth}
-                    </p>
+                    <p>{handleCurrentMonth(forecast.date)}</p>
                     <div className="grid grid-cols-2 gap-1">
                       <div className="border-solid text-center border border-blue-300 bg-blue-500 p-4 rounded-xl">
                         <div className="flex items-center gap-1">
