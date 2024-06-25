@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { IoSearchOutline } from "react-icons/io5";
 import { MdArrowForwardIos } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export function Header() {
@@ -11,6 +12,7 @@ export function Header() {
   const [rotateIcon, setRotateIcon] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const navigate = useNavigate();
 
   const handleRotateIcon = () => {
     toggleFormat();
@@ -40,7 +42,7 @@ export function Header() {
   }, [searchValue]);
 
   const handleSearchValue = (city) => {
-    GetTbilisiWeather(city);
+    navigate(`/Weather/${city}`);
     setSearchResult([]);
     setSearchValue("");
   };

@@ -6,31 +6,8 @@ import { FaWind } from "react-icons/fa";
 import { FcElectricity } from "react-icons/fc";
 
 export function WeatherDayCostumize() {
-  const { currentDay, currentFormat, handleCurrentMonth } = useGlobalProvider();
-  const [currentWeathers, setCurrentWeathers] = useState();
-
-  const startDate = new Date(currentDay);
-  startDate.setDate(currentDay.getDate() + 3);
-  const endDate = new Date(currentDay);
-  endDate.setDate(currentDay.getDate() + 9);
-
-  const formattedStartDate = startDate.toISOString().split("T")[0];
-  const formattedEndDate = endDate.toISOString().split("T")[0];
-
-  useEffect(() => {
-    async function getOther() {
-      try {
-        const handleFormat = currentFormat.Speed === "kph" ? "metric" : "us";
-        const resp = await axios.get(
-          `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Tbilisi/${formattedStartDate}/${formattedEndDate}?unitGroup=${handleFormat}&key=UZX2S8964NKCR42RGD2KYW4WG&contentType=json`
-        );
-        setCurrentWeathers(resp.data.days);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getOther();
-  }, [currentFormat]);
+  const { currentFormat, handleCurrentMonth, currentWeathers } =
+    useGlobalProvider();
 
   let icon = "";
   const getIcons = (item) => {

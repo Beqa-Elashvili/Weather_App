@@ -1,0 +1,1 @@
+export { CurrentHoursCarousel } from "./CarouselWithHours";
