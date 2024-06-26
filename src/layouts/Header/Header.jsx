@@ -1,37 +1,31 @@
 import { Select, Input, Button } from "antd";
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { IoSearchOutline } from "react-icons/io5";
 import { MdArrowForwardIos } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useGetSearchResult } from "@src/hooks/usegetSearchResults";
 
 export function Header() {
-  const { toggleFormat, GetTbilisiWeather } = useGlobalProvider();
+  const { toggleFormat, searchResult, setSearchResult } = useGlobalProvider();
   const [rotateIcon, setRotateIcon] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
+  const { GetSearchResult } = useGetSearchResult();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleRotateIcon = () => {
     toggleFormat();
     setRotateIcon(!rotateIcon);
   };
 
-  async function getCitysBySearch() {
-    const resp = await axios.get(
-      `http://api.weatherapi.com/v1/search.json?key=91a6e75e56dc4dad8e192202241306&q=${searchValue}`
-    );
-    setSearchResult(resp.data);
-  }
-
   useEffect(() => {
     if (searchValue) {
       const timeoutId = setTimeout(() => {
-        getCitysBySearch();
-      }, 400);
-
+        GetSearchResult(searchValue, setSearchResult);
+      }, 300);
       return () => {
         clearTimeout(timeoutId);
       };
@@ -46,6 +40,19 @@ export function Header() {
     setSearchResult([]);
     setSearchValue("");
   };
+
+  const SearchResults = (value) => {
+    if (searchValue && searchResult) {
+      navigate(`/Weather/Search&results=/:${value}`);
+    }
+    setSearchValue("");
+    setSearchResult([]);
+  };
+
+  useEffect(() => {
+    setSearchValue("");
+    setSearchResult([]);
+  }, [location]);
 
   return (
     <div>
@@ -73,7 +80,7 @@ export function Header() {
             onChange={(e) => setSearchValue(e.target.value)}
           />
           <button
-            onClick={GetTbilisiWeather}
+            onClick={() => SearchResults(searchValue)}
             className="p-[5px] h-[30px] absolute right-[1px] top-[1px] top-[2%] rounded-r-[5px] border-none"
           >
             <IoSearchOutline className="w-12 h-5 cursor-pointer " />

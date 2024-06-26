@@ -64,6 +64,8 @@ export const GlobalProvider = ({ children }) => {
   const [currentDay, setCurrentDay] = useState(new Date());
   const [currentWeathers, setCurrentWeathers] = useState();
   const [timeZone, setTimeZone] = useState();
+  const [searchResult, setSearchResult] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const videoRef = useRef(null);
 
@@ -140,7 +142,7 @@ export const GlobalProvider = ({ children }) => {
       setTimeZone(timeZone);
       setLoading(false);
     } catch (error) {
-      alert("fetch wether data failed");
+      alert(error.response.data.error.message);
     } finally {
       setLoading(false);
     }
@@ -218,6 +220,8 @@ export const GlobalProvider = ({ children }) => {
         setCurrentWeathers,
         formattedStartDate,
         formattedEndDate,
+        searchResult,
+        setSearchResult,
       }}
     >
       {children}

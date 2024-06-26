@@ -1,15 +1,12 @@
 import { HomeWeather } from "@src/Components/HomeComponents/HomeWeather";
 import { WeatherByDay } from "@src/Components/HomeComponents/MainWeatherByDay";
-import { useRef, useEffect } from "react";
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { Skeleton } from "antd";
 import { WeatherDayCostumize } from "@src/Components/HomeComponents/WeatherByDays";
 
 export function Home() {
-  const videoRef = useRef(null);
-  const { loading, weather } = useGlobalProvider();
+  const { loading } = useGlobalProvider();
   const SkeletonArray = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
-
 
   return (
     <div>
@@ -52,14 +49,6 @@ export function Home() {
         </div>
       ) : (
         <>
-          <video
-            ref={videoRef}
-            autoPlay
-            loop
-            muted
-            src={weather}
-            className="absolute w-full z-0"
-          />
           <div className="flex flex-col gap-12 p-12 ">
             <div className="flex items-start justify-between">
               <HomeWeather />
