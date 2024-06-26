@@ -60,7 +60,12 @@ export function Header() {
         <div className="fixed z-20 inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
       )}
       <div className="p-2 z-20 px-12 bg-blue-300 flex items-center gap-12 relative ">
-        <img className="size-12" src="/ApiLogo/Api-logo.png" alt="" />
+        <img
+          onClick={() => navigate("/")}
+          className="size-12 cursor-pointer"
+          src="/ApiLogo/Api-logo.png"
+          alt="logo"
+        />
         <Select placeholder="City" className="min-w-28">
           <Select.Option value="Tbilisi">Tbilisi</Select.Option>
           <Select.Option value="Batumi">Batumi</Select.Option>
