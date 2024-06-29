@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useGetCurrentWeathers } from "@src/hooks/useGetCurrentWeathers";
 import { GetCurrentTime } from "@src/Components/CurrentTime";
-export function Weathers() {
-  const { GetTbilisiWeather,weather } = useGlobalProvider();
-  const { GetCurrentWeathers } = useGetCurrentWeathers();
 
+export function Weathers() {
+  const { GetTbilisiWeather } = useGlobalProvider();
+  const { GetCurrentWeathers } = useGetCurrentWeathers();
   let { City } = useParams();
 
   useEffect(() => {
