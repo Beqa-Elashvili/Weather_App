@@ -16,6 +16,8 @@ function GlobeComp() {
     <div>
       <Globe
         ref={globeRef}
+        height={600}
+        width={600}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
         backgroundColor="rgba(0, 0, 0, 0)"
         enableRotation={true}

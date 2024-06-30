@@ -13,9 +13,9 @@ const VideoBackground = ({ children }) => {
           loop
           muted
           src={weather}
-          className="absolute w-full z-0"
+          className="absolute w-full object-cover z-0"
         />
-        <div className="absolute">
+        <div className="absolute  inset-20 flex justify-center">
           <GlobeComp />
         </div>
       </div>
