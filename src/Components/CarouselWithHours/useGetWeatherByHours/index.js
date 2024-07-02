@@ -1,0 +1,1 @@
+export { useGetWeatherByHours } from "./useGetWeatherByHours";

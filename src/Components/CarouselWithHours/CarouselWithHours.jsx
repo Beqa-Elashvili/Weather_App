@@ -3,107 +3,73 @@ import Carousel from "react-simply-carousel";
 import { useState, useEffect } from "react";
 import { FiSun } from "react-icons/fi";
 import { FaArrowLeft } from "react-icons/fa6";
+import { IoTimeOutline } from "react-icons/io5";
+import { useGetWeatherByHours } from "./useGetWeatherByHours";
 
 export function CurrentHoursCarousel() {
-  const { TbilisiWeather, currentFormat, currentTime } = useGlobalProvider();
-  const [FilteredHours, setFilteredHours] = useState();
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-  const getNextHours = (startDayIndex, startHourIndex) => {
-    const hours = [];
-    let currentDayIndex = startDayIndex;
-    let currentHourIndex = startHourIndex;
-    while (
-      hours.length < 18 &&
-      currentDayIndex < TbilisiWeather.forecast.forecastday.length
-    ) {
-      const day = TbilisiWeather.forecast.forecastday[currentDayIndex];
-      while (currentHourIndex < day.hour.length && hours.length < 18) {
-        hours.push(day.hour[currentHourIndex]);
-        currentHourIndex++;
-      }
-      currentDayIndex++;
-      currentHourIndex = 0;
-    }
-    return hours;
-  };
-  function FindCurrectTime() {
-    const filter = TbilisiWeather.forecast.forecastday.map((item) =>
-      item.hour.filter(
-        (item) =>
-          item.time.toString()[11] === currentTime.toString()[16] &&
-          item.time.toString()[12] === currentTime.toString()[17]
-      )
-    );
-    let cut = filter[0][0].time;
-    setFilteredHours(parseInt(cut.slice(10, 13)));
-  }
-  const firstDay = TbilisiWeather.forecast.forecastday[0];
-  const startIndex = firstDay.hour.findIndex((hour) => {
-    const hourValue = parseInt(hour.time.substring(11, 13));
-    return hourValue >= FilteredHours;
-  });
-
-  let hoursToShow = [];
-  if (startIndex !== -1) {
-    hoursToShow = getNextHours(0, startIndex);
-  } else {
-    hoursToShow = getNextHours(0, 0);
-  }
-  useEffect(() => {
-    FindCurrectTime();
-  }, [TbilisiWeather, currentTime]);
+  const { currentFormat } = useGlobalProvider();
+  const { hoursToShow, activeSlideIndex, setActiveSlideIndex } =
+    useGetWeatherByHours();
 
   return (
-    <div className=" z-10">
-      <div
-        className="cursor-pointer z-10 text-end mr-2"
-        onClick={() => setActiveSlideIndex(0)}
-      >
-        <FaArrowLeft className="text-[#15719f] size-6" />
+    <div className="z-10 w-full">
+      <div className="flex items-center justify-between p-2">
+        <div className="flex items-center gap-2">
+          <IoTimeOutline className="size-6 text-[#15719f] " />
+          <p className=" text-xl text-[#15719f] ">Hourly Forecast</p>
+        </div>
+        <div
+          className="cursor-pointer z-10 text-end mr-2"
+          onClick={() => setActiveSlideIndex(0)}
+        >
+          <FaArrowLeft className="text-[#15719f] size-6" />
+        </div>
       </div>
       <div className="flex gap-2 relative">
-        <Carousel
-          activeSlideIndex={activeSlideIndex}
-          onRequestChange={setActiveSlideIndex}
-          itemsToShow={5}
-          itemsToScroll={1}
-          speed={400}
-          easing="linear"
-          forwardBtnProps={{
-            className:
-              "border-none h-full opacity-0 cursor-pointer  hover:opacity-20 absolute top-1/2 right-0 transform -translate-y-1/2  ",
-            children: (
-              <h1 className="p-2 bg-slate-400 h-full flex items-center text-white ">{`>`}</h1>
-            ),
-          }}
-          backwardBtnProps={{
-            className:
-              "border-none opacity-0 cursor-pointer z-10 h-full hover:opacity-20 absolute top-1/2 left-0 transform -translate-y-1/2  ",
-            children: (
-              <h1 className="p-2  bg-slate-400 h-full flex items-center   text-white  ">{`<`}</h1>
-            ),
-          }}
-        >
-          {hoursToShow.map((hour) => (
-            <div
-              key={hour.time}
-              className="flex flex-col items-center gap-2 min-w-20 py-4"
-            >
-              <img className="size-8" src={hour.condition.icon} alt="" />
-              <div className="flex">
-                <FiSun className="mr-1 mt-1 text-yellow-400" />
-                <div>
-                  {currentFormat.Speed === "kph" ? (
-                    <p>{hour.temp_c}&deg;C</p>
-                  ) : (
-                    <p>{hour.temp_f}&deg;F</p>
-                  )}
-                  <p>{hour.time.split(" ")[1]}</p>
+        <div className="p-2 flex gap-12 w-full">
+          <Carousel
+            activeSlideIndex={activeSlideIndex}
+            onRequestChange={setActiveSlideIndex}
+            itemsToShow={8}
+            itemsToScroll={1}
+            speed={400}
+            easing="linear"
+            forwardBtnProps={{
+              className:
+                "border-none h-full opacity-0 cursor-pointer  hover:opacity-20 absolute top-1/2 right-0 transform -translate-y-1/2  ",
+              children: (
+                <h1 className="p-2 bg-slate-400 h-full flex items-center text-white ">{`>`}</h1>
+              ),
+            }}
+            backwardBtnProps={{
+              className:
+                "border-none opacity-0 cursor-pointer z-10 h-full hover:opacity-20 absolute top-1/2 left-0 transform -translate-y-1/2  ",
+              children: (
+                <h1 className="p-2 bg-slate-400 h-full flex items-center   text-white  ">{`<`}</h1>
+              ),
+            }}
+          >
+            {hoursToShow.map((hour, index) => (
+              <div
+                key={hour.time}
+                className="flex flex-col  text-xl text-white items-center gap-2 w-ful py-4 w-28 px-4 rounded-xl hover:bg-slate-400  cursor-pointer"
+              >
+                {index === 0 ? <p>Now</p> : <p>{hour.time.split(" ")[1]}</p>}
+                <img className="size-12" src={hour.condition.icon} alt="icon" />
+                <div className="flex ">
+                  <FiSun className="mr-1 mt-1 text-yellow-400" />
+                  <div className="text-2xl">
+                    {currentFormat.Speed === "kph" ? (
+                      <p>{hour.temp_c}&deg;C</p>
+                    ) : (
+                      <p>{hour.temp_f}&deg;F</p>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </Carousel>
+            ))}
+          </Carousel>
+        </div>
       </div>
     </div>
   );

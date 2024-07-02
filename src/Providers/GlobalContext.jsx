@@ -149,7 +149,6 @@ export const GlobalProvider = ({ children }) => {
   }
 
   const startDate = new Date(currentDay);
-  startDate.setDate(currentDay.getDate() + 3);
   const endDate = new Date(currentDay);
   endDate.setDate(currentDay.getDate() + 9);
 

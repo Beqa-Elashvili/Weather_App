@@ -15,11 +15,10 @@ const VideoBackground = ({ children }) => {
           src={weather}
           className="absolute w-full object-cover z-0"
         />
-        <div className="absolute  inset-20 flex justify-center">
+        <div className="absolute inset-20 flex justify-center">
           <GlobeComp />
         </div>
       </div>
-
       <div className="relative">{children}</div>
     </div>
   );

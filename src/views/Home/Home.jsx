@@ -50,13 +50,13 @@ export function Home() {
       ) : (
         <div>
           <div className="bg-slate-800 bg-opacity-70 flex flex-col gap-12 z-0 p-6 rounded-xl">
-            <div className="flex items-start justify-between">
+            <div className="flex justify-between gap-6">
               <HomeWeather />
-              <WeatherByDay />
+              <div>
+                <WeatherByDay />
+                <WeatherDayCostumize />
+              </div>
             </div>
-            {/* <div className="z-10">
-              <WeatherDayCostumize />
-            </div> */}
           </div>
         </div>
       )}

@@ -5,6 +5,7 @@ import { FaWind } from "react-icons/fa";
 import { FaSun } from "react-icons/fa";
 import { FiSunrise } from "react-icons/fi";
 import { FiSunset } from "react-icons/fi";
+import { CurrentHoursCarousel } from "@src/Components/CarouselWithHours";
 
 const daysOfWeek = [
   "Sunday",
@@ -17,13 +18,10 @@ const daysOfWeek = [
 ];
 
 export function WeatherByDay() {
-  const {
-    TbilisiWeather,
-    currentFormat,
-    currentDay,
-    handleCurrentMonth,
-  } = useGlobalProvider();
+  const { TbilisiWeather, currentFormat, currentDay, handleCurrentMonth } =
+    useGlobalProvider();
   const current = currentDay.getDay();
+
   const getNextTwoDays = () => {
     const nextTwoDays = [];
     for (let i = 0; i <= 2; i++) {
@@ -34,9 +32,10 @@ export function WeatherByDay() {
   const reorderedDaysOfWeek = getNextTwoDays();
 
   return (
-    <div className="z-10">
-      <div className="flex gap-12 bg-blue- bg-opacity-50">
-        {reorderedDaysOfWeek.map((day, index) => {
+    <div className="z-10 w-full">
+      <div className="flex bg-slate-100 bg-opacity-60 border-solid border border-blue-300 rounded-xl">
+        <CurrentHoursCarousel />
+        {/* {reorderedDaysOfWeek.map((day, index) => {
           const forecast = TbilisiWeather?.forecast?.forecastday[index];
           return (
             <div
@@ -105,7 +104,6 @@ export function WeatherByDay() {
                         </div>
                       </div>
                     </div>
-
                     <div className="text-center">
                       <img
                         className="size-12"
@@ -131,7 +129,7 @@ export function WeatherByDay() {
               )}
             </div>
           );
-        })}
+        })} */}
       </div>
     </div>
   );

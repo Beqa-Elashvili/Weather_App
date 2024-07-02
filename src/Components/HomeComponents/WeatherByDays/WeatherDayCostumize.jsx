@@ -95,7 +95,11 @@ export function WeatherDayCostumize() {
             >
               <img src={getIcons(item.icon)} alt="weather icon" />
               <div className="flex gap-1 justify-center">
-                <p>{handleCurrentMonth(item.datetime)}</p>
+                {index === 0 ? (
+                  <p>Today</p>
+                ) : (
+                  <p>{handleCurrentMonth(item.datetime)}</p>
+                )}
               </div>
               <div className="flex items-center justify-around  text-blue-600 text-lg">
                 <div className="flex flex-col items-center">
