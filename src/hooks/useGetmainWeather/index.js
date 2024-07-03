@@ -1,0 +1,1 @@
+export { GetWeatherByCity } from "./useGetMainWeather";

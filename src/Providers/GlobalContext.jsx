@@ -1,4 +1,10 @@
-import React, { createContext, useState, useEffect, useCallback } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 import axios from "axios";
 import { useRef } from "react";
 import { useLocation } from "react-router-dom";
@@ -77,11 +83,10 @@ export const GlobalProvider = ({ children }) => {
 
   useEffect(() => {
     const storedSpeed = localStorage.getItem("Speed");
-    if (storedSpeed === "Kph") {
-      setCurrentFormat(Enam[0]);
-    }
     if (storedSpeed === "Mph") {
       setCurrentFormat(Enam[1]);
+    } else if (storedSpeed === "kph") {
+      setCurrentFormat(Enam[0]);
     }
   }, []);
 
@@ -91,7 +96,7 @@ export const GlobalProvider = ({ children }) => {
       localStorage.setItem("Speed", "Mph");
     } else {
       setCurrentFormat(Enam[0]);
-      localStorage.setItem("Speed", "Kpm");
+      localStorage.setItem("Speed", "kph");
     }
   }, [currentFormat]);
 
@@ -131,11 +136,11 @@ export const GlobalProvider = ({ children }) => {
     }
   }, [TbilisiWeather?.current.condition.text]);
 
-  async function GetTbilisiWeather(City) {
+  async function GetTbilisiWeather() {
     try {
       setLoading(true);
       const resp = await axios.get(
-        `http://api.weatherapi.com/v1/forecast.json?key=91a6e75e56dc4dad8e192202241306&lang=en&q=${City}&days=7&aqi=yes`
+        `http://api.weatherapi.com/v1/forecast.json?key=91a6e75e56dc4dad8e192202241306&lang=en&q=Tbilisi&days=7&aqi=yes`
       );
       setTbilisiWeather(resp.data);
       const timeZone = resp.data.location.tz_id;
@@ -155,7 +160,7 @@ export const GlobalProvider = ({ children }) => {
   const formattedStartDate = startDate.toISOString().split("T")[0];
   const formattedEndDate = endDate.toISOString().split("T")[0];
 
-  async function getOther() {
+  async function getDays() {
     try {
       const handleFormat = currentFormat.Speed === "kph" ? "metric" : "us";
       const resp = await axios.get(
@@ -171,13 +176,13 @@ export const GlobalProvider = ({ children }) => {
 
   useEffect(() => {
     if (location.pathname === "/") {
-      getOther();
+      getDays();
     }
   }, [currentFormat]);
 
   useEffect(() => {
     if (location.pathname === "/") {
-      GetTbilisiWeather("Tbilisi");
+      GetTbilisiWeather();
     }
     const current = currentTime.getDay();
     setCurrentWeekDay(daysOfWeek[current]);

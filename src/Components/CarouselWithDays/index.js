@@ -1,0 +1,1 @@
+export { CarouselWithDays } from "./CarouselWithDays";

@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import GlobeComp from "../GlobeComp/GlobeComp";
+
 const VideoBackground = ({ children }) => {
   const { weather } = useGlobalProvider();
   const videoRef = useRef(null);

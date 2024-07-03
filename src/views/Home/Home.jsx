@@ -1,9 +1,8 @@
 import { HomeWeather } from "@src/Components/HomeComponents/HomeWeather";
-import { WeatherByDay } from "@src/Components/HomeComponents/MainWeatherByDay";
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { Skeleton } from "antd";
-import { WeatherDayCostumize } from "@src/Components/HomeComponents/WeatherByDays";
-
+import { CarouselWithHours } from "@src/Components/CarouselWithHours";
+import { CarouselWithDays } from "@src/Components/CarouselWithDays";
 export function Home() {
   const { loading } = useGlobalProvider();
   const SkeletonArray = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
@@ -53,8 +52,8 @@ export function Home() {
             <div className="flex justify-between gap-6">
               <HomeWeather />
               <div>
-                <WeatherByDay />
-                <WeatherDayCostumize />
+                <CarouselWithHours />
+                <CarouselWithDays />
               </div>
             </div>
           </div>

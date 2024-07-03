@@ -16,7 +16,7 @@ export function useGetCurrentWeathers() {
       );
       setCurrentWeathers(resp.data.days);
     } catch (error) {
-      console.error(error);
+      allert(error);
     }
   }
   return { GetCurrentWeathers };

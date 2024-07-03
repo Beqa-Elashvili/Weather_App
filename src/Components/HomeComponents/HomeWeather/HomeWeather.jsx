@@ -1,7 +1,6 @@
 import React from "react";
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { GetCurrentTime } from "@src/Components/CurrentTime";
-import { CurrentHoursCarousel } from "@src/Components/CarouselWithHours";
 import { LiaTemperatureHighSolid } from "react-icons/lia";
 import { FaWind } from "react-icons/fa";
 import { WiHumidity } from "react-icons/wi";

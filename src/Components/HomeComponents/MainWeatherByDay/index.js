@@ -1,1 +1,0 @@
-export { WeatherByDay } from "./WeatherByDay";

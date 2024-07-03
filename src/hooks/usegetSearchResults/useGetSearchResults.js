@@ -2,7 +2,6 @@ import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import axios from "axios";
 
 export function useGetSearchResult() {
-
   async function GetSearchResult(value, setSearchResult) {
     try {
       const resp = await axios.get(

@@ -1,1 +1,1 @@
-export { CurrentHoursCarousel } from "./CarouselWithHours";
+export { CarouselWithHours } from "./CarouselWithHours";
