@@ -16,7 +16,7 @@ export function CarouselWithHours() {
         <div className="flex items-center justify-between p-2">
           <div className="flex items-center gap-2">
             <IoTimeOutline className="size-6 text-[#15719f] " />
-            <p className=" text-xl text-[#15719f] ">Hourly Forecast</p>
+            <p className=" text-xl text-[#15719f] ">HOURLY FORECAST</p>
           </div>
           <div
             className="cursor-pointer z-10 text-end mr-2"
@@ -36,16 +36,16 @@ export function CarouselWithHours() {
               easing="linear"
               forwardBtnProps={{
                 className:
-                  "border-none h-full opacity-0 cursor-pointer  hover:opacity-20 absolute top-1/2 right-0 transform -translate-y-1/2  ",
+                  "border-none h-full bg-slate-400 rounded-ee-xl opacity-0 cursor-pointer  hover:opacity-20 absolute top-1/2 right-0 transform -translate-y-1/2  ",
                 children: (
-                  <h1 className="p-2 bg-slate-400 h-full flex items-center text-white ">{`>`}</h1>
+                  <h1 className="p-2  h-full flex items-center text-white ">{`>`}</h1>
                 ),
               }}
               backwardBtnProps={{
                 className:
-                  "border-none opacity-0 cursor-pointer z-10 h-full hover:opacity-20 absolute top-1/2 left-0 transform -translate-y-1/2  ",
+                  "border-none opacity-0  rounded-es-xl bg-slate-400  cursor-pointer z-10 h-full hover:opacity-20 absolute top-1/2 left-0 transform -translate-y-1/2  ",
                 children: (
-                  <h1 className="p-2 bg-slate-400 h-full flex items-center   text-white  ">{`<`}</h1>
+                  <h1 className="p-2 h-full flex items-center   text-white  ">{`<`}</h1>
                 ),
               }}
             >

@@ -3,7 +3,7 @@ import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import GlobeComp from "../GlobeComp/GlobeComp";
 
 const VideoBackground = ({ children }) => {
-  const { weather } = useGlobalProvider();
+  const { weather, loading } = useGlobalProvider();
   const videoRef = useRef(null);
   return (
     <div>

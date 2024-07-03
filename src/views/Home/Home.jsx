@@ -24,25 +24,48 @@ export function Home() {
               <Skeleton.Image active />
             </div>
           </div>
-          <div>
-            <div className="flex gap-12">
-              <Skeleton.Input active />
-              <Skeleton.Input active />
-              <Skeleton.Input active />
-              <Skeleton.Input active />
-              <Skeleton.Input active />
-            </div>
-            <div className="flex gap-12 mt-1">
-              {SkeletonArray.map((item) => (
-                <Skeleton
-                  key={item.id}
-                  active
-                  paragraph={{
-                    rows: 4,
-                    width: ["50%", "50%", "100%", "100%"],
-                  }}
-                />
-              ))}
+          <div className="flex flex-col gap-12">
+            <div>
+              <div className="flex gap-12">
+                <Skeleton.Input active />
+                <Skeleton.Input active />
+                <Skeleton.Input active />
+                <Skeleton.Input active />
+                <Skeleton.Input active />
+              </div>
+              <div className="flex gap-12 mt-1">
+                {SkeletonArray.map((item) => (
+                  <Skeleton
+                    key={item.id}
+                    active
+                    paragraph={{
+                      rows: 4,
+                      width: ["50%", "50%", "100%", "100%"],
+                    }}
+                  />
+                ))}
+              </div>
+            </div>{" "}
+            <div>
+              <div className="flex gap-12">
+                <Skeleton.Input active />
+                <Skeleton.Input active />
+                <Skeleton.Input active />
+                <Skeleton.Input active />
+                <Skeleton.Input active />
+              </div>
+              <div className="flex gap-12 mt-1">
+                {SkeletonArray.map((item) => (
+                  <Skeleton
+                    key={item.id}
+                    active
+                    paragraph={{
+                      rows: 4,
+                      width: ["50%", "50%", "100%", "100%"],
+                    }}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -51,7 +74,7 @@ export function Home() {
           <div className="bg-slate-800 bg-opacity-70 flex flex-col gap-12 z-0 p-6 rounded-xl">
             <div className="flex justify-between gap-6">
               <HomeWeather />
-              <div>
+              <div className="flex flex-col gap-4">
                 <CarouselWithHours />
                 <CarouselWithDays />
               </div>

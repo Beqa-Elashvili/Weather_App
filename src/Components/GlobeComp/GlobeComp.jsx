@@ -1,9 +1,11 @@
 import React from "react";
 import Globe from "react-globe.gl";
 import { useRef } from "react";
+import useGlobalProvider from "@src/Providers/useGlobalProvider";
 
 function GlobeComp() {
   const globeRef = useRef();
+  const { loading } = useGlobalProvider();
 
   const startAutoRotate = () => {
     if (globeRef.current) {
@@ -18,6 +20,7 @@ function GlobeComp() {
         ref={globeRef}
         height={600}
         width={600}
+        waitForGlobeReady={loading}
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
         backgroundColor="rgba(0, 0, 0, 0)"
         enableRotation={true}

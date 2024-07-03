@@ -43,24 +43,6 @@ const getWeatherVideoPath = (currentVideo) => {
   }
 };
 
-const getMonthName = (date) => {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  return months[date.getMonth()];
-};
-
 export const GlobalProvider = ({ children }) => {
   const [TbilisiWeather, setTbilisiWeather] = useState();
   const [currentWeekDay, setCurrentWeekDay] = useState("");
@@ -77,7 +59,8 @@ export const GlobalProvider = ({ children }) => {
 
   const handleCurrentMonth = (day) => {
     const itemDate = new Date(day);
-    const formattedDate = `${getMonthName(itemDate)} ${itemDate.getDate()}`;
+    const options = { weekday: "long" };
+    const formattedDate = itemDate.toLocaleDateString("en-US", options);
     return formattedDate;
   };
 
