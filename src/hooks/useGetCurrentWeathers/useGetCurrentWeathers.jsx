@@ -16,8 +16,12 @@ export function useGetCurrentWeathers() {
       );
       setCurrentWeathers(resp.data.days);
     } catch (error) {
-      allert(error);
+      alert(
+        `${error.message}. Bad API Request:Invalid location parameter value. Forecast Days is't avliable on this location`
+      );
+      setCurrentWeathers([]);
     }
   }
+
   return { GetCurrentWeathers };
 }

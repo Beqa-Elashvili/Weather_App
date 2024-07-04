@@ -10,6 +10,7 @@ export function CarouselWithHours() {
   const { hoursToShow, activeSlideIndex, setActiveSlideIndex } =
     useGetWeatherByHours();
 
+
   return (
     <div className="z-10 w-full">
       <div className="flex flex-col bg-slate-100 bg-opacity-60 border-solid border border-blue-300 rounded-xl">

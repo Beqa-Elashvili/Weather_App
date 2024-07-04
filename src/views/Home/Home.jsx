@@ -3,6 +3,7 @@ import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { Skeleton } from "antd";
 import { CarouselWithHours } from "@src/Components/CarouselWithHours";
 import { CarouselWithDays } from "@src/Components/CarouselWithDays";
+
 export function Home() {
   const { loading } = useGlobalProvider();
   const SkeletonArray = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
