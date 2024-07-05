@@ -3,6 +3,7 @@ import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { Skeleton } from "antd";
 import { CarouselWithHours } from "@src/Components/CarouselWithHours";
 import { CarouselWithDays } from "@src/Components/CarouselWithDays";
+import { MapContent } from "@src/Components/MapView";
 
 export function Home() {
   const { loading } = useGlobalProvider();
@@ -73,12 +74,15 @@ export function Home() {
       ) : (
         <div>
           <div className="bg-slate-800 bg-opacity-70 flex flex-col gap-12 z-0 p-6 rounded-xl">
-            <div className="flex justify-between gap-6">
-              <HomeWeather />
-              <div className="flex flex-col gap-4">
-                <CarouselWithHours />
-                <CarouselWithDays />
+            <div className="flex flex-col gap-4">
+              <div className="flex justify-between gap-6">
+                <HomeWeather />
+                <div className="flex flex-col gap-4">
+                  <CarouselWithHours />
+                  <CarouselWithDays />
+                </div>
               </div>
+              <MapContent />
             </div>
           </div>
         </div>

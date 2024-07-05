@@ -12,6 +12,7 @@ export function Header() {
   const { toggleFormat, searchResult, setSearchResult } = useGlobalProvider();
   const [rotateIcon, setRotateIcon] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [selectValue, setSelectvalue] = useState("City");
   const { GetSearchResult } = useGetSearchResult();
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,10 +50,22 @@ export function Header() {
     setSearchResult([]);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      SearchResults(searchValue);
+    }
+  };
+
   useEffect(() => {
     setSearchValue("");
     setSearchResult([]);
   }, [location]);
+
+  useEffect(() => {
+    if (selectValue !== "City") {
+      navigate(`/Weather/${selectValue}`);
+    }
+  }, [selectValue]);
 
   return (
     <div>
@@ -66,7 +79,12 @@ export function Header() {
           src="/ApiLogo/Api-logo.png"
           alt="logo"
         />
-        <Select placeholder="City" className="min-w-28">
+        <Select
+          value={selectValue}
+          onChange={(e) => setSelectvalue(e)}
+          placeholder="City"
+          className="min-w-28"
+        >
           <Select.Option value="Tbilisi">Tbilisi</Select.Option>
           <Select.Option value="Batumi">Batumi</Select.Option>
           <Select.Option value="Kutaisi">Kutaisi</Select.Option>
@@ -82,6 +100,7 @@ export function Header() {
           <Input
             placeholder="Search the City"
             value={searchValue}
+            onKeyDown={handleKeyDown}
             onChange={(e) => setSearchValue(e.target.value)}
           />
           <button
