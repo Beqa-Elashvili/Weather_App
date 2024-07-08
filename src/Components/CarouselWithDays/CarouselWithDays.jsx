@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useGetIcons } from "@src/hooks/useGetIcons";
 import { FaArrowLeft } from "react-icons/fa6";
 import { FaCalendarDays } from "react-icons/fa6";
+import { Spin } from "antd";
 
 export function CarouselWithDays() {
   const { getIcons } = useGetIcons();
@@ -26,59 +27,70 @@ export function CarouselWithDays() {
         </div>
       </div>
       <div className="flex gap-2 relative">
-        <div className="p-2 flex gap-12 w-full">
-          <Carousel
-            activeSlideIndex={activeSlideIndex}
-            onRequestChange={setActiveSlideIndex}
-            itemsToShow={8}
-            itemsToScroll={1}
-            speed={400}
-            easing="linear"
-            forwardBtnProps={{
-              className:
-                "border-none h-full opacity-0 bg-slate-400 cursor-pointer rounded-ee-xl  hover:opacity-20 absolute top-1/2 right-0 transform -translate-y-1/2  ",
-              children: (
-                <h1 className="p-2  h-full flex items-center text-white ">{`>`}</h1>
-              ),
-            }}
-            backwardBtnProps={{
-              className:
-                "border-none opacity-0  cursor-pointer bg-slate-400 rounded-es-xl  z-10 h-full hover:opacity-20 absolute top-1/2 left-0 transform -translate-y-1/2  ",
-              children: (
-                <h1 className="p-2  h-full flex items-center   text-white  ">{`<`}</h1>
-              ),
-            }}
-          >
-            {currentWeathers?.map((item, index) => (
-              <div
-                key={item.datetime}
-                className="flex flex-col  text-xl text-white items-center gap-2 w-ful py-4 w-28 px-4 rounded-xl hover:bg-slate-400  cursor-pointer"
-              >
-                <div className="text-center">
-                  {index === 0 ? (
-                    <>
-                      <p>Today</p>
-                    </>
-                  ) : (
-                    <>
-                      <p>{handleCurrentMonth(item.datetime)}</p>
-                    </>
-                  )}
-                  <p className="text-sm font-medium text-slate-600">
-                    {item.datetime.replace(/^\d{4}-/, "").replace("-", "/")}
-                  </p>
-                </div>
-                <div className="text-2xl">
-                  {currentFormat.Speed === "kph" ? (
-                    <p>{item.temp}&deg;C</p>
-                  ) : (
-                    <p>{item.temp}&deg;F</p>
-                  )}
-                </div>
-                <img src={getIcons(item.icon)} alt="" />
+        <div className="p-2 flex justify-center gap-12 w-full">
+          {!currentWeathers ? (
+            <div className="h-48">
+              <div className="flex items-center gap-4 mt-12">
+                <p className="text-3xl font-medium text-[#15719f]">
+                  please wait
+                </p>
+                <Spin />
               </div>
-            ))}
-          </Carousel>
+            </div>
+          ) : (
+            <Carousel
+              activeSlideIndex={activeSlideIndex}
+              onRequestChange={setActiveSlideIndex}
+              itemsToShow={8}
+              itemsToScroll={1}
+              speed={400}
+              easing="linear"
+              forwardBtnProps={{
+                className:
+                  "border-none h-full opacity-0 bg-slate-400 cursor-pointer rounded-ee-xl  hover:opacity-20 absolute top-1/2 right-0 transform -translate-y-1/2  ",
+                children: (
+                  <h1 className="p-2  h-full flex items-center text-white ">{`>`}</h1>
+                ),
+              }}
+              backwardBtnProps={{
+                className:
+                  "border-none opacity-0  cursor-pointer bg-slate-400 rounded-es-xl  z-10 h-full hover:opacity-20 absolute top-1/2 left-0 transform -translate-y-1/2  ",
+                children: (
+                  <h1 className="p-2  h-full flex items-center   text-white  ">{`<`}</h1>
+                ),
+              }}
+            >
+              {currentWeathers?.map((item, index) => (
+                <div
+                  key={item.datetime}
+                  className="flex flex-col  text-xl text-white items-center gap-2 w-ful py-4 w-28 px-4 rounded-xl hover:bg-slate-400  cursor-pointer"
+                >
+                  <div className="text-center">
+                    {index === 0 ? (
+                      <>
+                        <p>Today</p>
+                      </>
+                    ) : (
+                      <>
+                        <p>{handleCurrentMonth(item.datetime)}</p>
+                      </>
+                    )}
+                    <p className="text-sm font-medium text-slate-600">
+                      {item.datetime.replace(/^\d{4}-/, "").replace("-", "/")}
+                    </p>
+                  </div>
+                  <div className="text-2xl">
+                    {currentFormat.Speed === "kph" ? (
+                      <p>{item.temp}&deg;C</p>
+                    ) : (
+                      <p>{item.temp}&deg;F</p>
+                    )}
+                  </div>
+                  <img src={getIcons(item.icon)} alt="weather_icon" />
+                </div>
+              ))}
+            </Carousel>
+          )}
         </div>
       </div>
     </div>
