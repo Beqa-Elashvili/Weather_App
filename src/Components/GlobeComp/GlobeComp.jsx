@@ -16,16 +16,18 @@ function GlobeComp() {
 
   return (
     <div>
-      <Globe
-        ref={globeRef}
-        height={600}
-        width={600}
-        waitForGlobeReady={loading}
-        globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
-        backgroundColor="rgba(0, 0, 0, 0)"
-        enableRotation={true}
-        onGlobeReady={() => startAutoRotate()}
-      />
+      <div className="hidden lg:block">
+        <Globe
+          ref={globeRef}
+          height={600}
+          width={600}
+          waitForGlobeReady={loading}
+          globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
+          backgroundColor="rgba(0, 0, 0, 0)"
+          enableRotation={true}
+          onGlobeReady={() => startAutoRotate()}
+        />
+      </div>
     </div>
   );
 }

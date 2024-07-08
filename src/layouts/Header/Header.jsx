@@ -13,6 +13,7 @@ export function Header() {
   const [rotateIcon, setRotateIcon] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [selectValue, setSelectvalue] = useState("City");
+  const [showSection, setShowSection] = useState(false); // State to manage section visibility
   const { GetSearchResult } = useGetSearchResult();
   const navigate = useNavigate();
   const location = useLocation();
@@ -68,11 +69,11 @@ export function Header() {
   }, [selectValue]);
 
   return (
-    <div>
+    <div className="relative">
       {searchResult.length > 0 && (
         <div className="fixed z-20 inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
       )}
-      <div className="p-2 z-20 px-12 bg-blue-300 flex items-center gap-12 relative ">
+      <div className="p-2 z-30 px-12 bg-blue-300 flex items-center justify-between gap-12 relative">
         <img
           onClick={() => navigate("/")}
           className="size-12 cursor-pointer"
@@ -96,7 +97,7 @@ export function Header() {
           <Select.Option value="Khashuri">Khashuri</Select.Option>
           <Select.Option value="Senaki">Senaki</Select.Option>
         </Select>
-        <div className="w-full relative">
+        <div className="w-full relative hidden lg:block">
           <Input
             placeholder="Search the City"
             value={searchValue}
@@ -107,7 +108,7 @@ export function Header() {
             onClick={() => SearchResults(searchValue)}
             className="p-[5px] h-[30px] absolute right-[1px] top-[1px] top-[2%] rounded-r-[5px] border-none"
           >
-            <IoSearchOutline className="w-12 h-5 cursor-pointer " />
+            <IoSearchOutline className="w-12 h-5 cursor-pointer" />
           </button>
           <div
             className={`text-white p-2 bg-blue-100 w-full overflow-x-auto rounded max-h-60 absolute z-20 flex flex-col gap-2 ${
@@ -136,7 +137,17 @@ export function Header() {
             ))}
           </div>
         </div>
-        <Button className="flex items-center gap-2" onClick={handleRotateIcon}>
+        <button
+          onClick={() => setShowSection(!showSection)}
+          className="flex lg:hidden items-center p-2 gap-1 rounded-xl border-none"
+        >
+          <IoSearchOutline className="text-blue-600 size-4" />
+          {">>"}
+        </button>
+        <Button
+          className="flex items-center gap-2 hidden lg:flex"
+          onClick={handleRotateIcon}
+        >
           Change Format
           <FaArrowsRotate
             className="text-blue-400"
@@ -148,6 +159,35 @@ export function Header() {
             }}
           />
         </Button>
+      </div>
+      <div
+        className={`fixed z-30 inset-y-0 top-16 right-0 bg-white shadow-lg transition-transform transform ${
+          showSection ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="p-4 flex flex-col gap-4">
+          <Input
+            placeholder="Search the City"
+            value={searchValue}
+            onKeyDown={handleKeyDown}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+          <Button
+            onClick={handleRotateIcon}
+            className="flex items-center gap-2"
+          >
+            Change Format
+            <FaArrowsRotate
+              className="text-blue-400"
+              style={{
+                height: 20,
+                width: 30,
+                transition: "transform 1s ease",
+                transform: rotateIcon ? "rotate(360deg)" : "rotate(0deg)",
+              }}
+            />
+          </Button>
+        </div>
       </div>
     </div>
   );
