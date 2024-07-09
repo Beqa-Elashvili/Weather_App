@@ -1,4 +1,4 @@
-import { Select, Input, Button } from "antd";
+import { Select, Input, Button, Spin } from "antd";
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -13,14 +13,19 @@ export function Header() {
   const [rotateIcon, setRotateIcon] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [selectValue, setSelectvalue] = useState("City");
-  const [showSection, setShowSection] = useState(false); // State to manage section visibility
-  const { GetSearchResult } = useGetSearchResult();
+  const [showSection, setShowSection] = useState(false);
+  const { GetSearchResult, SearchLoading } = useGetSearchResult();
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleRotateIcon = () => {
     toggleFormat();
     setRotateIcon(!rotateIcon);
+    setTimeout(() => {
+      if (showSection) {
+        setShowSection(!showSection);
+      }
+    }, 300);
   };
 
   useEffect(() => {
@@ -47,6 +52,7 @@ export function Header() {
     if (searchValue && searchResult) {
       navigate(`/Weather/Search&results=/:${value}`);
     }
+    setShowSection(false);
     setSearchValue("");
     setSearchResult([]);
   };
@@ -68,9 +74,26 @@ export function Header() {
     }
   }, [selectValue]);
 
+  useEffect(() => {
+    if (showSection) {
+      setSearchResult([]);
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    } else {
+      setSearchResult([]);
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    };
+  }, [showSection]);
+
   return (
     <div className="relative">
-      {searchResult.length > 0 && (
+      {(searchResult.length > 0 || showSection) && (
         <div className="fixed z-20 inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
       )}
       <div className="p-2 z-30 px-12 bg-blue-300 flex items-center justify-between gap-12 relative">
@@ -97,21 +120,24 @@ export function Header() {
           <Select.Option value="Khashuri">Khashuri</Select.Option>
           <Select.Option value="Senaki">Senaki</Select.Option>
         </Select>
-        <div className="w-full relative hidden lg:block">
+        <div className="w-full relative flex items-center hidden lg:flex">
           <Input
             placeholder="Search the City"
             value={searchValue}
             onKeyDown={handleKeyDown}
             onChange={(e) => setSearchValue(e.target.value)}
           />
+          <div className="absolute right-16">
+            {SearchLoading && <Spin />}
+          </div>
           <button
             onClick={() => SearchResults(searchValue)}
-            className="p-[5px] h-[30px] absolute right-[1px] top-[1px] top-[2%] rounded-r-[5px] border-none"
+            className=" h-[30px] absolute right-[1px] rounded-r-[5px] flex items-center border-none"
           >
             <IoSearchOutline className="w-12 h-5 cursor-pointer" />
           </button>
           <div
-            className={`text-white p-2 bg-blue-100 w-full overflow-x-auto rounded max-h-60 absolute z-20 flex flex-col gap-2 ${
+            className={`text-white top-10 p-2 bg-blue-100 w-full overflow-x-auto rounded max-h-60 absolute z-20 flex flex-col gap-2 ${
               searchResult.length === 0 ? "hidden" : "flex"
             }`}
           >
@@ -137,12 +163,36 @@ export function Header() {
             ))}
           </div>
         </div>
+
         <button
           onClick={() => setShowSection(!showSection)}
           className="flex lg:hidden items-center p-2 gap-1 rounded-xl border-none"
         >
-          <IoSearchOutline className="text-blue-600 size-4" />
-          {">>"}
+          {showSection ? (
+            <>
+              <IoSearchOutline className="text-blue-600 size-4" />
+              <p
+                style={{
+                  transition: "transform 1s ease",
+                  transform: rotateIcon ? "rotate(360deg)" : "rotate(0deg)",
+                }}
+              >
+                {"<<"}
+              </p>
+            </>
+          ) : (
+            <>
+              <IoSearchOutline className="text-blue-600 size-4" />
+              <p
+                style={{
+                  transition: "transform 1s ease",
+                  transform: rotateIcon ? "rotate(0deg)" : "rotate(360deg)",
+                }}
+              >
+                {">>"}
+              </p>
+            </>
+          )}
         </button>
         <Button
           className="flex items-center gap-2 hidden lg:flex"
@@ -161,7 +211,7 @@ export function Header() {
         </Button>
       </div>
       <div
-        className={`fixed z-30 inset-y-0 top-16 right-0 bg-white shadow-lg transition-transform transform ${
+        className={`fixed z-30 h-full top-16 right-0 bg-white shadow-lg transition-transform transform ${
           showSection ? "translate-x-0" : "translate-x-full"
         }`}
       >

@@ -9,14 +9,14 @@ import { TbCloudSearch } from "react-icons/tb";
 export function HomeWeather() {
   const { TbilisiWeather, currentWeekDay, currentFormat } = useGlobalProvider();
   return (
-    <div className="relative w-full p-4 bg-slate-100 bg-opacity-60 text-white flex flex-col z-10 gap-2 border-solid border border-blue-300 rounded-xl max-w-[400px]">
+    <div className="relative w-full p-4 bg-slate-100 bg-opacity-60 text-white flex flex-col z-10 gap-2 border-solid border border-blue-300 rounded-xl  lg:max-w-[400px]">
       <div className="absolute top-2 left-2">
         <GetCurrentTime />
       </div>
       {TbilisiWeather !== undefined && (
         <div className="flex flex-col items-center">
           <div className="text-center">
-            <h1 className="text-[#15719f] max-w-48">
+            <h1 className="text-[#15719f] lg:max-w-48 ">
               {TbilisiWeather.location.name}
             </h1>
             <p className="text-[#15719f] text-balance">

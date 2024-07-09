@@ -14,7 +14,7 @@ export function CarouselWithDays() {
 
   return (
     <div className="flex flex-col bg-slate-100 bg-opacity-60 border-solid border border-blue-300 rounded-xl">
-      <div className="flex items-center justify-between p-2">
+      <div className="flex items-center w-full justify-between p-2">
         <div className="flex items-center gap-2">
           <FaCalendarDays className="size-6 text-[#15719f] " />
           <p className=" text-xl text-[#15719f] ">10-DAY FORECAST</p>
@@ -26,6 +26,13 @@ export function CarouselWithDays() {
           <FaArrowLeft className="text-[#15719f] size-6" />
         </div>
       </div>
+      {currentWeathers?.length === 0 && (
+        <div className="text-center h-48 w-full">
+          <p className="mt-14 text-3xl text-[#15719f] ">
+            Daily weather is not available for this location
+          </p>
+        </div>
+      )}
       <div className="flex gap-2 relative">
         <div className="p-2 flex justify-center gap-12 w-full">
           {!currentWeathers ? (

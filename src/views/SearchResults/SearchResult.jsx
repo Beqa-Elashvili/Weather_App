@@ -23,7 +23,7 @@ export function SearchResults() {
   }, [City]);
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <video
         autoPlay
         loop
@@ -32,10 +32,10 @@ export function SearchResults() {
         className="absolute w-full z-0 "
       />
       <div className="relative z-10 flex justify-center text-white gap-2 items-center p-12">
-        <div className="flex flex-col gap-2 w-[80%]">
+        <div className="flex flex-col gap-2 lg:w-[80%]">
           {results?.map((item) => (
             <div
-              className="flex items-center shadow w-full justify-between bg-blue-600 shadow-inner rounded p-2 cursor-pointer"
+              className="flex items-center  shadow w-full justify-between bg-blue-600 shadow-inner rounded p-2 cursor-pointer"
               key={item.id}
               onClick={() => handleSearchValue(item.name)}
             >
@@ -50,7 +50,7 @@ export function SearchResults() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-24 flex flex-col gap-1">
+                <div className="w-24 hidden lg:flex  flex-col gap-1">
                   <p className="bg-blue-100 text-blue-800 shadow-inner rounded-lg p-2 text-center">
                     <span className="float-start">lat: </span>
                     <span className="flex justify-end">{item.lat}</span>
