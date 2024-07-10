@@ -1,15 +1,15 @@
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import Carousel from "react-simply-carousel";
 import { FiSun } from "react-icons/fi";
+import { useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoTimeOutline } from "react-icons/io5";
 import { useGetWeatherByHours } from "./useGetWeatherByHours";
 
 export function CarouselWithHours() {
-  const { currentFormat } = useGlobalProvider();
+  const { currentFormat, itemsToShow } = useGlobalProvider();
   const { hoursToShow, activeSlideIndex, setActiveSlideIndex } =
     useGetWeatherByHours();
-
 
   return (
     <div className="z-10 w-full">
@@ -31,7 +31,7 @@ export function CarouselWithHours() {
             <Carousel
               activeSlideIndex={activeSlideIndex}
               onRequestChange={setActiveSlideIndex}
-              itemsToShow={8}
+              itemsToShow={itemsToShow}
               itemsToScroll={1}
               speed={400}
               easing="linear"
@@ -46,24 +46,37 @@ export function CarouselWithHours() {
                 className:
                   "border-none opacity-0  rounded-es-xl bg-slate-400  cursor-pointer z-10 h-full hover:opacity-20 absolute top-1/2 left-0 transform -translate-y-1/2  ",
                 children: (
-                  <h1 className="p-2 h-full flex items-center   text-white  ">{`<`}</h1>
+                  <h1 className="p-2 h-full flex items-center  text-white  ">{`<`}</h1>
                 ),
               }}
             >
               {hoursToShow.map((hour, index) => (
                 <div
                   key={hour.time}
-                  className="flex flex-col  text-xl text-white items-center gap-2 w-ful py-4 w-28 px-4 rounded-xl hover:bg-slate-400  cursor-pointer"
+                  className="flex flex-col text-xl text-white items-center gap-2  py-4 w-[78px] md:w-1/2 lg:w-24 xl:w-28 px-4 rounded-xl hover:bg-slate-400  cursor-pointer"
                 >
-                  {index === 0 ? <p>Now</p> : <p>{hour.time.split(" ")[1]}</p>}
+                  <div className="text-md lg:text-xl xl:text-xl">
+                    {index === 0 ? (
+                      <p>Now</p>
+                    ) : (
+                      <p>{hour.time.split(" ")[1]}</p>
+                    )}
+                  </div>
                   <img
-                    className="size-12"
+                    className="size-8 lg:size-12"
                     src={hour.condition.icon}
                     alt="icon"
                   />
-                  <div className="flex ">
-                    <FiSun className="mr-1 mt-1 text-yellow-400" />
-                    <div className="text-2xl">
+                  <div className="flex items-center">
+                    <FiSun className="mr-1 mt-1  text-yellow-400" />
+                    <div className="block lg:hidden text-md lg:text-2xl">
+                      {currentFormat.Speed === "kph" ? (
+                        <p>{hour.temp_c}&deg;</p>
+                      ) : (
+                        <p>{hour.temp_f}&deg;</p>
+                      )}
+                    </div>
+                    <div className="hidden lg:block text-sm lg:text-2xl">
                       {currentFormat.Speed === "kph" ? (
                         <p>{hour.temp_c}&deg;C</p>
                       ) : (

@@ -39,7 +39,7 @@ export function HomeWeather() {
             </p>
           </div>
           <div className="grid grid-cols-2 gap-2">
-            <div className="bg-slate-500 p-4 rounded-xl w-40">
+            <div className="bg-slate-500 p-4 rounded-xl  w-38 sm:w-40 md:w-40 lg:w-40 xl:w-40 ">
               <div className="flex items-center gap-2 text-[#a0d9f5]">
                 <LiaTemperatureHighSolid className="size-6" />
                 <p>Feels Like</p>
@@ -56,7 +56,7 @@ export function HomeWeather() {
                 )}
               </div>
             </div>
-            <div className="bg-slate-500 p-4 rounded-xl w-40">
+            <div className="bg-slate-500 p-4 rounded-xl w-38 sm:w-40 md:w-40 lg:w-40 xl:w-40 ">
               <div className="flex items-center gap-2 text-[#a0d9f5]">
                 <FaWind className="size-6" />
                 <p>max wind</p>
@@ -69,7 +69,7 @@ export function HomeWeather() {
                 )}
               </div>
             </div>
-            <div className="bg-slate-500 p-4 rounded-xl w-40">
+            <div className="bg-slate-500 p-4 rounded-xl w-38 sm:w-40 md:w-40 lg:w-40 xl:w-40 ">
               <div className="flex items-center gap-2 text-[#a0d9f5]">
                 <WiHumidity className="size-6" />
                 <p>Humidity</p>
@@ -78,7 +78,7 @@ export function HomeWeather() {
                 {TbilisiWeather.current.humidity} %
               </div>
             </div>
-            <div className="bg-slate-500 p-4 rounded-xl w-40">
+            <div className="bg-slate-500 p-4 rounded-xl w-38 sm:w-40 md:w-40 lg:w-40 xl:w-40 ">
               <div className="flex items-center gap-2 text-[#a0d9f5]">
                 <TbCloudSearch className="size-6" />
                 <p>C O</p>

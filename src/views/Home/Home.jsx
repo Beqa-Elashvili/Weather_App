@@ -73,11 +73,11 @@ export function Home() {
         </div>
       ) : (
         <div>
-          <div className=" bg-slate-800 relative bg-opacity-70 flex flex-col gap-12 z-0 p-6 rounded-xl">
-            <div className="flex flex-col gap-4">
-              <div className="flex justify-between gap-6 hidden lg:flex">
+          <div className="bg-slate-800 relative bg-opacity-70 flex flex-col gap-12 z-0 p-4 lg:p-6 rounded-xl">
+            <div className="flex flex-col w-full gap-4">
+              <div className="gap-6 hidden lg:flex justify-between">
                 <HomeWeather />
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col lg:w-1/2 xl:w-full gap-4">
                   <CarouselWithHours />
                   <CarouselWithDays />
                 </div>

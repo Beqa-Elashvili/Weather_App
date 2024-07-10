@@ -9,8 +9,9 @@ import { Spin } from "antd";
 export function CarouselWithDays() {
   const { getIcons } = useGetIcons();
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-  const { currentWeathers, currentFormat, handleCurrentMonth } =
+  const { currentWeathers, currentFormat, handleCurrentMonth, itemsToShow } =
     useGlobalProvider();
+  console.log(itemsToShow);
 
   return (
     <div className="flex flex-col bg-slate-100 bg-opacity-60 border-solid border border-blue-300 rounded-xl">
@@ -48,31 +49,31 @@ export function CarouselWithDays() {
             <Carousel
               activeSlideIndex={activeSlideIndex}
               onRequestChange={setActiveSlideIndex}
-              itemsToShow={8}
+              itemsToShow={itemsToShow}
               itemsToScroll={1}
               speed={400}
               easing="linear"
               forwardBtnProps={{
                 className:
-                  "border-none h-full opacity-0 bg-slate-400 cursor-pointer rounded-ee-xl  hover:opacity-20 absolute top-1/2 right-0 transform -translate-y-1/2  ",
+                  "border-none h-full bg-slate-400 rounded-ee-xl opacity-0 cursor-pointer  hover:opacity-20 absolute top-1/2 right-0 transform -translate-y-1/2  ",
                 children: (
                   <h1 className="p-2  h-full flex items-center text-white ">{`>`}</h1>
                 ),
               }}
               backwardBtnProps={{
                 className:
-                  "border-none opacity-0  cursor-pointer bg-slate-400 rounded-es-xl  z-10 h-full hover:opacity-20 absolute top-1/2 left-0 transform -translate-y-1/2  ",
+                  "border-none opacity-0  rounded-es-xl bg-slate-400  cursor-pointer z-10 h-full hover:opacity-20 absolute top-1/2 left-0 transform -translate-y-1/2  ",
                 children: (
-                  <h1 className="p-2  h-full flex items-center   text-white  ">{`<`}</h1>
+                  <h1 className="p-2 h-full flex items-center  text-white  ">{`<`}</h1>
                 ),
               }}
             >
               {currentWeathers?.map((item, index) => (
                 <div
                   key={item.datetime}
-                  className="flex flex-col  text-xl text-white items-center gap-2 w-ful py-4 w-28 px-4 rounded-xl hover:bg-slate-400  cursor-pointer"
+                  className="flex flex-col text-white items-center gap-2 w-full py-4 w-20 md:w-1/2 lg:w-24 xl:w-28 px-4 rounded-xl hover:bg-slate-400  cursor-pointer"
                 >
-                  <div className="text-center">
+                  <div className="text-center text-sm md:text-md lg:text-xl xl:text-xl">
                     {index === 0 ? (
                       <>
                         <p>Today</p>
@@ -82,18 +83,22 @@ export function CarouselWithDays() {
                         <p>{handleCurrentMonth(item.datetime)}</p>
                       </>
                     )}
-                    <p className="text-sm font-medium text-slate-600">
+                    <p className="text-xs lg:text-sm font-medium text-slate-600">
                       {item.datetime.replace(/^\d{4}-/, "").replace("-", "/")}
                     </p>
                   </div>
-                  <div className="text-2xl">
+                  <div className="lg:text-2xl">
                     {currentFormat.Speed === "kph" ? (
                       <p>{item.temp}&deg;C</p>
                     ) : (
                       <p>{item.temp}&deg;F</p>
                     )}
                   </div>
-                  <img src={getIcons(item.icon)} alt="weather_icon" />
+                  <img
+                    className="size-12 lg:size-16"
+                    src={getIcons(item.icon)}
+                    alt="weather_icon"
+                  />
                 </div>
               ))}
             </Carousel>

@@ -53,6 +53,28 @@ export const GlobalProvider = ({ children }) => {
   const [currentWeathers, setCurrentWeathers] = useState();
   const [timeZone, setTimeZone] = useState();
   const [searchResult, setSearchResult] = useState([]);
+  const [itemsToShow, setItemsToShow] = useState(8);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 2560) {
+        setItemsToShow(20);
+      } else if (window.innerWidth >= 1280) {
+        setItemsToShow(8);
+      } else if (window.innerWidth >= 1024) {
+        setItemsToShow(4);
+      } else if (window.innerWidth >= 768) {
+        setItemsToShow(8);
+      } else if (window.innerWidth >= 425) {
+        setItemsToShow(4);
+      } else {
+        setItemsToShow(4);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const [loading, setLoading] = useState(true);
   const videoRef = useRef(null);
@@ -138,7 +160,7 @@ export const GlobalProvider = ({ children }) => {
 
   const startDate = new Date(currentDay);
   const endDate = new Date(currentDay);
-  endDate.setDate(currentDay.getDate() + 9);
+  endDate.setDate(currentDay.getDate() + 17);
 
   const formattedStartDate = startDate.toISOString().split("T")[0];
   const formattedEndDate = endDate.toISOString().split("T")[0];
@@ -196,6 +218,7 @@ export const GlobalProvider = ({ children }) => {
         setTimeZone,
         loading,
         setLoading,
+
         toggleFormat,
         currentFormat,
         setCurrentFormat,
@@ -209,6 +232,7 @@ export const GlobalProvider = ({ children }) => {
         formattedEndDate,
         searchResult,
         setSearchResult,
+        itemsToShow,
       }}
     >
       {children}
