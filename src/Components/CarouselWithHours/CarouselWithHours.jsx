@@ -69,7 +69,7 @@ export function CarouselWithHours() {
                   />
                   <div className="flex items-center">
                     <FiSun className="mr-1 mt-1  text-yellow-400" />
-                    <div className="block lg:hidden text-md lg:text-2xl">
+                    <div className="block lg:hidden text-xl lg:text-2xl">
                       {currentFormat.Speed === "kph" ? (
                         <p>{hour.temp_c}&deg;</p>
                       ) : (

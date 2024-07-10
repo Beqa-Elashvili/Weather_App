@@ -23,13 +23,13 @@ export function SearchResults() {
   }, [City]);
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full z-0 h-full">
       <video
         autoPlay
         loop
         muted
         src="../../videos/good weather.mp4"
-        className="absolute w-full z-0 "
+        className="absolute w-full z-0 h-full min-h-[700px] object-cover"
       />
       <div className="relative z-10 flex justify-center text-white gap-2 items-center p-12">
         <div className="flex flex-col gap-2 lg:w-[80%]">

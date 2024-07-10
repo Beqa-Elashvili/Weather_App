@@ -18,6 +18,7 @@ export function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
+
   const handleRotateIcon = () => {
     toggleFormat();
     setRotateIcon(!rotateIcon);
@@ -46,6 +47,9 @@ export function Header() {
     navigate(`/Weather/${city}`);
     setSearchResult([]);
     setSearchValue("");
+    if (showSection) {
+      setShowSection(!showSection);
+    }
   };
 
   const SearchResults = (value) => {
@@ -127,9 +131,7 @@ export function Header() {
             onKeyDown={handleKeyDown}
             onChange={(e) => setSearchValue(e.target.value)}
           />
-          <div className="absolute right-16">
-            {SearchLoading && <Spin />}
-          </div>
+          <div className="absolute right-16">{SearchLoading && <Spin />}</div>
           <button
             onClick={() => SearchResults(searchValue)}
             className=" h-[30px] absolute right-[1px] rounded-r-[5px] flex items-center border-none"
@@ -211,11 +213,11 @@ export function Header() {
         </Button>
       </div>
       <div
-        className={`fixed z-30 h-full top-16 right-0 bg-white shadow-lg transition-transform transform ${
+        className={`fixed z-30 h-full top-16 w-56 right-0 bg-white shadow-lg transition-transform transform ${
           showSection ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="p-4 flex flex-col gap-4">
+        <div className="p-4 flex  flex-col gap-4">
           <Input
             placeholder="Search the City"
             value={searchValue}
@@ -237,6 +239,17 @@ export function Header() {
               }}
             />
           </Button>
+          <div className="flex flex-col gap-2">
+            {searchResult?.map((item) => (
+              <div
+                onClick={() => handleSearchValue(item.name)}
+                className="cursor-pointer text-white bg-blue-500 w-full h-16 flex justify-center flex-col rounded-xl border-none overflow-hidden p-2"
+              >
+                <p>City: {item.name}</p>
+                <p>{item.country}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
