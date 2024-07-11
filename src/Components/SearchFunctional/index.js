@@ -1,1 +1,0 @@
-export { SearchFunction } from "./SearchFunctional";

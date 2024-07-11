@@ -70,9 +70,9 @@ export function CarouselWithDays() {
               {currentWeathers?.map((item, index) => (
                 <div
                   key={item.datetime}
-                  className="flex flex-col text-white items-center gap-2 w-full py-4 md:w- lg:w-28 xl:w-28 rounded-xl px-2 md:px-3 lg:px-4 xl:px-4 hover:bg-slate-400  cursor-pointer"
+                  className="flex flex-col text-white items-center  gap-2 w-full py-4  xl:w-28 rounded-xl px-2 md:px-3 lg:px-4 xl:px-4 hover:bg-slate-400  cursor-pointer"
                 >
-                  <div className="text-center text-md md:text-md lg:text-xl xl:text-xl">
+                  <div className="text-center text-md md:text-md lg:text- xl:text-xl">
                     {index === 0 ? (
                       <>
                         <p>Today</p>
@@ -86,7 +86,7 @@ export function CarouselWithDays() {
                       {item.datetime.replace(/^\d{4}-/, "").replace("-", "/")}
                     </p>
                   </div>
-                  <div className="text-xl lg:text-2xl">
+                  <div className="text-xl lg:text-xl">
                     {currentFormat.Speed === "kph" ? (
                       <p>{item.temp}&deg;C</p>
                     ) : (

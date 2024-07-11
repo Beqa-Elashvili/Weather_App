@@ -3,7 +3,6 @@ import React, {
   useState,
   useEffect,
   useCallback,
-  useMemo,
 } from "react";
 import axios from "axios";
 import { useRef } from "react";
@@ -191,7 +190,7 @@ export const GlobalProvider = ({ children }) => {
     }
     const current = currentTime.getDay();
     setCurrentWeekDay(daysOfWeek[current]);
-  }, [currentTime.toString()[8], currentTime.toString()[9]]);
+  }, [currentTime.toString()[8], currentTime.toString()[9]],location);
 
   useEffect(() => {
     const videoElement = videoRef.current;

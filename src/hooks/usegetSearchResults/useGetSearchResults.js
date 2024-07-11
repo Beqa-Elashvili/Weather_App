@@ -1,4 +1,3 @@
-import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import axios from "axios";
 import { useState } from "react";
 

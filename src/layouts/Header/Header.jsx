@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { useGetSearchResult } from "@src/hooks/usegetSearchResults";
 
 export function Header() {
-  const { toggleFormat, searchResult, setSearchResult } = useGlobalProvider();
+  const { toggleFormat, searchResult, setSearchResult, currentFormat } =
+    useGlobalProvider();
   const [rotateIcon, setRotateIcon] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [selectValue, setSelectvalue] = useState("City");
@@ -17,7 +18,6 @@ export function Header() {
   const { GetSearchResult, SearchLoading } = useGetSearchResult();
   const navigate = useNavigate();
   const location = useLocation();
-
 
   const handleRotateIcon = () => {
     toggleFormat();
@@ -70,6 +70,9 @@ export function Header() {
   useEffect(() => {
     setSearchValue("");
     setSearchResult([]);
+    if (showSection) {
+      setShowSection(!showSection);
+    }
   }, [location]);
 
   useEffect(() => {
@@ -100,7 +103,7 @@ export function Header() {
       {(searchResult.length > 0 || showSection) && (
         <div className="fixed z-20 inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
       )}
-      <div className="p-2 z-30 px-12 bg-blue-300 flex items-center justify-between gap-12 relative">
+      <div className="p-2 z-30 px-12 bg-blue-300 flex items-center justify-between lg:gap-12 relative">
         <img
           onClick={() => navigate("/")}
           className="size-12 cursor-pointer"
@@ -139,7 +142,7 @@ export function Header() {
             <IoSearchOutline className="w-12 h-5 cursor-pointer" />
           </button>
           <div
-            className={`text-white top-10 p-2 bg-blue-100 w-full overflow-x-auto rounded max-h-60 absolute z-20 flex flex-col gap-2 ${
+            className={`text-white top-10 w-full p-2 bg-blue-100 w-full overflow-x-auto rounded max-h-60 absolute z-20 flex flex-col gap-2 ${
               searchResult.length === 0 ? "hidden" : "flex"
             }`}
           >
@@ -165,14 +168,16 @@ export function Header() {
             ))}
           </div>
         </div>
-
         <button
           onClick={() => setShowSection(!showSection)}
-          className="flex lg:hidden items-center p-2 gap-1 rounded-xl border-none"
+          className="flex lg:hidden  items-center justify-center p-2 gap-1 rounded-xl border-none"
         >
+          <IoSearchOutline className="text-blue-600 size-4" />
+          <div className="font-bold text-white rounded-full w-6 h-6 bg-blue-500 flex items-center p-1">
+            {currentFormat.Speed === "kph" ? <p>&deg;C</p> : <p>&deg;F</p>}
+          </div>
           {showSection ? (
             <>
-              <IoSearchOutline className="text-blue-600 size-4" />
               <p
                 style={{
                   transition: "transform 1s ease",
@@ -184,7 +189,6 @@ export function Header() {
             </>
           ) : (
             <>
-              <IoSearchOutline className="text-blue-600 size-4" />
               <p
                 style={{
                   transition: "transform 1s ease",
@@ -242,6 +246,7 @@ export function Header() {
           <div className="flex flex-col gap-2">
             {searchResult?.map((item) => (
               <div
+                key={item.id}
                 onClick={() => handleSearchValue(item.name)}
                 className="cursor-pointer text-white bg-blue-500 w-full h-16 flex justify-center flex-col rounded-xl border-none overflow-hidden p-2"
               >
