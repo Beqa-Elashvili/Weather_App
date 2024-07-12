@@ -1,7 +1,6 @@
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import Carousel from "react-simply-carousel";
 import { FiSun } from "react-icons/fi";
-import { useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoTimeOutline } from "react-icons/io5";
 import { useGetWeatherByHours } from "./useGetWeatherByHours";

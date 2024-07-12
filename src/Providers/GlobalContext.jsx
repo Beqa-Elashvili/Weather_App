@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useRef } from "react";
 import { useLocation } from "react-router-dom";
@@ -53,6 +48,7 @@ export const GlobalProvider = ({ children }) => {
   const [timeZone, setTimeZone] = useState();
   const [searchResult, setSearchResult] = useState([]);
   const [itemsToShow, setItemsToShow] = useState(8);
+  const location = useLocation();
 
   useEffect(() => {
     const handleResize = () => {
@@ -176,21 +172,23 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
-  const location = useLocation();
-
   useEffect(() => {
     if (location.pathname === "/") {
       getDays();
     }
   }, [currentFormat]);
 
-  useEffect(() => {
-    if (location.pathname === "/") {
-      GetTbilisiWeather();
-    }
-    const current = currentTime.getDay();
-    setCurrentWeekDay(daysOfWeek[current]);
-  }, [currentTime.toString()[8], currentTime.toString()[9]],location);
+  useEffect(
+    () => {
+      if (location.pathname === "/") {
+        GetTbilisiWeather();
+      }
+      const current = currentTime.getDay();
+      setCurrentWeekDay(daysOfWeek[current]);
+    },
+    [currentTime.toString()[8], currentTime.toString()[9]],
+    location
+  );
 
   useEffect(() => {
     const videoElement = videoRef.current;

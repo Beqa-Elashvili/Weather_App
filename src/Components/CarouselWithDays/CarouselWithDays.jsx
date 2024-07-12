@@ -5,9 +5,12 @@ import { useGetIcons } from "@src/hooks/useGetIcons";
 import { FaArrowLeft } from "react-icons/fa6";
 import { FaCalendarDays } from "react-icons/fa6";
 import { Spin } from "antd";
+import { CalendarModal } from "../Calendar";
+import { FaArrowsRotate } from "react-icons/fa6";
 
 export function CarouselWithDays() {
   const { getIcons } = useGetIcons();
+  const [rotateIcon, setRotateIcon] = useState(false);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const { currentWeathers, currentFormat, handleCurrentMonth, itemsToShow } =
     useGlobalProvider();
@@ -18,11 +21,24 @@ export function CarouselWithDays() {
         <div className="flex items-center gap-2">
           <FaCalendarDays className="size-6 text-[#15719f] " />
           <p className=" text-xl text-[#15719f] ">10-DAY FORECAST</p>
+          <div className="ml-4">
+            <CalendarModal />
+          </div>
         </div>
         <div
-          className="cursor-pointer z-10 text-end mr-2"
+          className="cursor-pointer z-1 flex items-center mr-2"
           onClick={() => setActiveSlideIndex(0)}
         >
+          <FaArrowsRotate
+            onClick={() => setRotateIcon(!rotateIcon)}
+            className="mr-4 size-6 text-[#15719f]"
+            style={{
+              height: 20,
+              width: 30,
+              transition: "transform 1s ease",
+              transform: rotateIcon ? "rotate(360deg)" : "rotate(0deg)",
+            }}
+          />
           <FaArrowLeft className="text-[#15719f] size-6" />
         </div>
       </div>

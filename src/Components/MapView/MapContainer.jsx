@@ -1,7 +1,7 @@
 import { MapContainer } from "react-leaflet";
 import { useEffect } from "react";
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
-import { useMap, Marker, Popup, useMapEvent, TileLayer } from "react-leaflet";
+import { useMap, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 export function MapContent() {
