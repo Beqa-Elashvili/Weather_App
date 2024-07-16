@@ -1,5 +1,5 @@
 import { useGetSearchResult } from "@src/hooks/usegetSearchResults";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { FaTreeCity } from "react-icons/fa6";
 import { MdArrowForwardIos } from "react-icons/md";
@@ -11,6 +11,11 @@ export function SearchResults() {
   const [results, setResults] = useState([]);
   const { City } = useParams();
   const navigate = useNavigate();
+
+  const videoRef = useRef(undefined);
+  useEffect(() => {
+    videoRef.current.defaultMuted = true;
+  });
 
   const handleSearchValue = (city) => {
     navigate(`/Weather/${city}`);
@@ -25,12 +30,17 @@ export function SearchResults() {
   return (
     <div className="w-full z-0 h-full">
       <video
+        ref={videoRef}
         autoPlay
         loop
+        typeof="video/mp4"
         muted
+        playsInline
         src="../../videos/good weather.mp4"
-        className="absolute w-full z-0 h-full min-h-[700px] object-cover"
-      />
+        className="absolute w-full h-full min-h-[650px] z-0 object-cover"
+      >
+        <source src="../../videos/good weather.mp4" type="video/mp4" />
+      </video>
       <div className="relative z-10 flex justify-center text-white gap-2 items-center p-12">
         <div className="flex flex-col gap-2 lg:w-[80%]">
           {results?.map((item) => (
