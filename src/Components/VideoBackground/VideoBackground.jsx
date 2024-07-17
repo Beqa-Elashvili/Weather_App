@@ -10,7 +10,6 @@ const VideoBackground = ({ children }) => {
     videoRef.current.defaultMuted = true;
   });
 
-  console.log(weather);
   return (
     <div className="relative h-full">
       <div>

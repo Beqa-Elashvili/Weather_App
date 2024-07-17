@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { Button, Modal } from "antd";
 import { FaCalendarAlt } from "react-icons/fa";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/theme/default.css";
 import "react-date-range/dist/styles.css";
+import { useNavigate } from "react-router-dom";
 import { useGetCurrentWeathers } from "@src/hooks/useGetCurrentWeathers";
 
 export function CalendarModal() {
@@ -14,6 +16,8 @@ export function CalendarModal() {
     endDate: new Date(),
     key: "selection",
   });
+  const navigate = useNavigate();
+  const { City } = useParams();
 
   const formattedDate = (date) => {
     if (!date) return "";
@@ -24,7 +28,6 @@ export function CalendarModal() {
   };
   const startDates = formattedDate(dateRange.startDate);
   const endDates = formattedDate(dateRange.endDate);
-
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -44,7 +47,7 @@ export function CalendarModal() {
   };
 
   const handleDateValues = () => {
-    GetCurrentWeathers("tbilisi", startDates, endDates);
+    navigate(`/Weather/${City}/${startDates}/${endDates}`);
   };
 
   return (

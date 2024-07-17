@@ -9,8 +9,14 @@ import { useNavigate } from "react-router-dom";
 import { useGetSearchResult } from "@src/hooks/usegetSearchResults";
 
 export function Header() {
-  const { toggleFormat, searchResult, setSearchResult, currentFormat } =
-    useGlobalProvider();
+  const {
+    toggleFormat,
+    searchResult,
+    currentFormat,
+    setSearchResult,
+    formattedStartDate,
+    formattedEndDate,
+  } = useGlobalProvider();
   const [rotateIcon, setRotateIcon] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [selectValue, setSelectvalue] = useState("City");
@@ -18,6 +24,8 @@ export function Header() {
   const { GetSearchResult, SearchLoading } = useGetSearchResult();
   const navigate = useNavigate();
   const location = useLocation();
+
+  console.log(formattedStartDate, formattedEndDate);
 
   const handleRotateIcon = () => {
     toggleFormat();
@@ -44,7 +52,7 @@ export function Header() {
   }, [searchValue]);
 
   const handleSearchValue = (city) => {
-    navigate(`/Weather/${city}`);
+    navigate(`/Weather/${city}/${formattedStartDate}/${formattedEndDate}`);
     setSearchResult([]);
     setSearchValue("");
     if (showSection) {
@@ -76,8 +84,10 @@ export function Header() {
   }, [location]);
 
   useEffect(() => {
-    if (selectValue !== "City") {
-      navigate(`/Weather/${selectValue}`);
+    if (selectValue !== "City" && formattedStartDate && formattedEndDate) {
+      navigate(
+        `/Weather/${selectValue}/${formattedStartDate}/${formattedEndDate}`
+      );
     }
   }, [selectValue]);
 

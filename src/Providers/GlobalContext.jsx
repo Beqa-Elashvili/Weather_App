@@ -23,15 +23,15 @@ let Enam = [
 const getWeatherVideoPath = (currentVideo) => {
   switch (currentVideo) {
     case "good":
-      return "../videos/good weather.mp4";
+      return "../../../videos/good weather.mp4";
     case "middle":
-      return "../videos/middle weather.mp4";
+      return "../../../videos/middle weather.mp4";
     case "bad":
-      return "../videos/bad weather.mp4";
+      return "../../../videos/bad weather.mp4";
     case "mist":
-      return "../videos/mist weather.mp4";
+      return "../../../videos/mist weather.mp4";
     case "high snow":
-      return "../videos/high snow.mp4";
+      return "../../../videos/high snow.mp4";
     default:
       return "";
   }
@@ -147,7 +147,7 @@ export const GlobalProvider = ({ children }) => {
       setTimeZone(timeZone);
       setLoading(false);
     } catch (error) {
-      alert(error.response.data.error.message);
+      alert(error.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -168,7 +168,12 @@ export const GlobalProvider = ({ children }) => {
       );
       setCurrentWeathers(resp.data.days);
     } catch (error) {
-      console.error(error);
+      alert(
+        `${error.response.data
+          .split(" ")
+          .slice(0, 13)
+          .join(" ")} please try again later.`
+      );
     }
   }
 
@@ -178,17 +183,13 @@ export const GlobalProvider = ({ children }) => {
     }
   }, [currentFormat]);
 
-  useEffect(
-    () => {
-      if (location.pathname === "/") {
-        GetTbilisiWeather();
-      }
-      const current = currentTime.getDay();
-      setCurrentWeekDay(daysOfWeek[current]);
-    },
-    [currentTime.toString()[8], currentTime.toString()[9]],
-    location
-  );
+  useEffect(() => {
+    if (location.pathname === "/") {
+      GetTbilisiWeather();
+    }
+    const current = currentTime.getDay();
+    setCurrentWeekDay(daysOfWeek[current]);
+  }, [currentTime.toString()[8], currentTime.toString()[9], location]);
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -215,7 +216,6 @@ export const GlobalProvider = ({ children }) => {
         setTimeZone,
         loading,
         setLoading,
-
         toggleFormat,
         currentFormat,
         setCurrentFormat,

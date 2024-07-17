@@ -1,24 +1,21 @@
 import { useGetSearchResult } from "@src/hooks/usegetSearchResults";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaTreeCity } from "react-icons/fa6";
 import { MdArrowForwardIos } from "react-icons/md";
 import { IoEarth } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import useGlobalProvider from "@src/Providers/useGlobalProvider";
 
 export function SearchResults() {
   const { GetSearchResult } = useGetSearchResult();
+  const { formattedStartDate, formattedEndDate } = useGlobalProvider();
   const [results, setResults] = useState([]);
   const { City } = useParams();
   const navigate = useNavigate();
 
-  const videoRef = useRef(undefined);
-  useEffect(() => {
-    videoRef.current.defaultMuted = true;
-  });
-
   const handleSearchValue = (city) => {
-    navigate(`/Weather/${city}`);
+    navigate(`/Weather/${city}/${formattedStartDate}/${formattedEndDate}`);
   };
 
   useEffect(() => {
@@ -30,7 +27,6 @@ export function SearchResults() {
   return (
     <div className="w-full z-0 h-full">
       <video
-        ref={videoRef}
         autoPlay
         loop
         typeof="video/mp4"

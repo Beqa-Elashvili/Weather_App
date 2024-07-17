@@ -20,7 +20,10 @@ function App() {
           <Routes>
             <Route element={<PublicLayout />}>
               <Route path="/" element={<Home />} />
-              <Route path="/Weather/:City" element={<Weather />} />
+              <Route
+                path="/Weather/:City/:startDate/:endDate"
+                element={<Weather />}
+              />
               <Route
                 path="/Weather/Search&results=/:City"
                 element={<SearchResults />}
