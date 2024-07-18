@@ -11,7 +11,7 @@ export function useGetCurrentWeathers() {
       );
       setCurrentWeathers(resp.data.days);
     } catch (error) {
-      alert(`${error.response.data.split(" ").slice(0, 13).join(" ")}, please try again later.`);
+      alert(`${error.response.data.split(" ").slice(0, 13).join(" ")} please try again later.`);
       setCurrentWeathers([]);
     }
   }

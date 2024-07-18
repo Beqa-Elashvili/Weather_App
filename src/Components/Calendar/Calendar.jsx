@@ -53,22 +53,25 @@ export function CalendarModal() {
   };
 
   return (
-    <div>
-      <>
-        <Button type="primary" onClick={showModal}>
-          <FaCalendarAlt />
-        </Button>
-        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-          <DateRange
-            moveRangeOnFirstSelectio={true}
-            retainEndDateOnFirstSelection={true}
-            ranges={[dateRange]}
-            onChange={handleSelect}
-            moveRangeOnFirstSelection={true}
-            rangeColors={["#3b82f6"]}
-          />
-        </Modal>
-      </>
-    </div>
+    <>
+      <Button type="primary" onClick={showModal}>
+        <FaCalendarAlt />
+      </Button>
+      <Modal
+        centered
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <DateRange
+          moveRangeOnFirstSelectio={true}
+          retainEndDateOnFirstSelection={true}
+          ranges={[dateRange]}
+          onChange={handleSelect}
+          moveRangeOnFirstSelection={true}
+          rangeColors={["#3b82f6"]}
+        />
+      </Modal>
+    </>
   );
 }

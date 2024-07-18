@@ -9,6 +9,7 @@ import { CalendarModal } from "../Calendar";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export function CarouselWithDays() {
   const { getIcons } = useGetIcons();
@@ -16,6 +17,7 @@ export function CarouselWithDays() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const navigate = useNavigate();
   const { City } = useParams();
+  const location = useLocation();
   const {
     currentWeathers,
     formattedStartDate,
@@ -35,13 +37,14 @@ export function CarouselWithDays() {
     }
   };
 
+
   return (
     <div className="flex flex-col bg-slate-100 bg-opacity-60 border-solid border border-blue-300 rounded-xl">
       <div className="flex items-center w-full justify-between p-2">
         <div className="flex items-center gap-2">
           <FaCalendarDays className="size-6 text-[#15719f] " />
-          <p className=" text-xl text-[#15719f] ">10-DAY FORECAST</p>
-          <div className="ml-4">
+          <p className=" text-xl  text-[#15719f] ">10-DAY FORECAST</p>
+          <div className="ml-2">
             <CalendarModal />
           </div>
         </div>
@@ -76,10 +79,20 @@ export function CarouselWithDays() {
           {!currentWeathers ? (
             <div className="h-48">
               <div className="flex items-center gap-4 mt-12">
-                <p className="text-3xl font-medium text-[#15719f]">
-                  please wait
-                </p>
-                <Spin />
+                {location.pathname === "/" ? (
+                  <>
+                    <p className="text-3xl text-balance text-center font-medium text-[#15719f]">
+                      maximum number of daily result records
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-3xl font-medium text-[#15719f]">
+                      "please wait"
+                    </p>
+                    <Spin />
+                  </>
+                )}
               </div>
             </div>
           ) : (
