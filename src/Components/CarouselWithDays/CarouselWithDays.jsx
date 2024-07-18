@@ -7,13 +7,33 @@ import { FaCalendarDays } from "react-icons/fa6";
 import { Spin } from "antd";
 import { CalendarModal } from "../Calendar";
 import { FaArrowsRotate } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export function CarouselWithDays() {
   const { getIcons } = useGetIcons();
   const [rotateIcon, setRotateIcon] = useState(false);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-  const { currentWeathers, currentFormat, handleCurrentMonth, itemsToShow } =
-    useGlobalProvider();
+  const navigate = useNavigate();
+  const { City } = useParams();
+  const {
+    currentWeathers,
+    formattedStartDate,
+    formattedEndDate,
+    currentFormat,
+    handleCurrentMonth,
+    itemsToShow,
+  } = useGlobalProvider();
+
+  const handleCorrectionDate = () => {
+    setRotateIcon(!rotateIcon);
+    navigate();
+    if (!City) {
+      navigate(`/Weather/Tbilisi/${formattedStartDate}/${formattedEndDate}`);
+    } else {
+      navigate(`/Weather/${City}/${formattedStartDate}/${formattedEndDate}`);
+    }
+  };
 
   return (
     <div className="flex flex-col bg-slate-100 bg-opacity-60 border-solid border border-blue-300 rounded-xl">
@@ -25,12 +45,9 @@ export function CarouselWithDays() {
             <CalendarModal />
           </div>
         </div>
-        <div
-          className="cursor-pointer z-1 flex items-center mr-2"
-          onClick={() => setActiveSlideIndex(0)}
-        >
+        <div className="flex items-center">
           <FaArrowsRotate
-            onClick={() => setRotateIcon(!rotateIcon)}
+            onClick={handleCorrectionDate}
             className="mr-4 size-6 text-[#15719f]"
             style={{
               height: 20,
@@ -39,7 +56,12 @@ export function CarouselWithDays() {
               transform: rotateIcon ? "rotate(360deg)" : "rotate(0deg)",
             }}
           />
-          <FaArrowLeft className="text-[#15719f] size-6" />
+          <div
+            className="cursor-pointer z-1 flex items-center mr-2"
+            onClick={() => setActiveSlideIndex(0)}
+          >
+            <FaArrowLeft className="text-[#15719f] size-6" />
+          </div>
         </div>
       </div>
       {currentWeathers?.length === 0 && (

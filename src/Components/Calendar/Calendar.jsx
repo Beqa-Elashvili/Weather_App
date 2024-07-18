@@ -6,11 +6,9 @@ import { DateRange } from "react-date-range";
 import "react-date-range/dist/theme/default.css";
 import "react-date-range/dist/styles.css";
 import { useNavigate } from "react-router-dom";
-import { useGetCurrentWeathers } from "@src/hooks/useGetCurrentWeathers";
 
 export function CalendarModal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { GetCurrentWeathers } = useGetCurrentWeathers();
   const [dateRange, setDateRange] = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -47,7 +45,11 @@ export function CalendarModal() {
   };
 
   const handleDateValues = () => {
-    navigate(`/Weather/${City}/${startDates}/${endDates}`);
+    if (!City) {
+      navigate(`/Weather/Tbilisi/${startDates}/${endDates}`);
+    } else {
+      navigate(`/Weather/${City}/${startDates}/${endDates}`);
+    }
   };
 
   return (

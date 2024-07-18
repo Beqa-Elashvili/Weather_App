@@ -25,7 +25,6 @@ export function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(formattedStartDate, formattedEndDate);
 
   const handleRotateIcon = () => {
     toggleFormat();
