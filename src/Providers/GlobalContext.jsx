@@ -149,7 +149,7 @@ export const GlobalProvider = ({ children }) => {
     } catch (error) {
       alert(error.response.data.message);
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   }
 

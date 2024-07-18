@@ -37,7 +37,6 @@ export function CarouselWithDays() {
     }
   };
 
-
   return (
     <div className="flex flex-col bg-slate-100 bg-opacity-60 border-solid border border-blue-300 rounded-xl">
       <div className="flex items-center w-full justify-between p-2">
@@ -51,7 +50,7 @@ export function CarouselWithDays() {
         <div className="flex items-center">
           <FaArrowsRotate
             onClick={handleCorrectionDate}
-            className="mr-4 size-6 text-[#15719f]"
+            className="mr-4 cursor-pointer size-6 text-[#15719f]"
             style={{
               height: 20,
               width: 30,
@@ -88,7 +87,7 @@ export function CarouselWithDays() {
                 ) : (
                   <>
                     <p className="text-3xl font-medium text-[#15719f]">
-                      "please wait"
+                      please wait
                     </p>
                     <Spin />
                   </>

@@ -16,7 +16,7 @@ export function HomeWeather() {
       {TbilisiWeather !== undefined && (
         <div className="flex flex-col items-center">
           <div className="text-center">
-            <h1 className="text-[#15719f] lg:max-w-48 ">
+            <h1 className="text-[#15719f] max-w-54">
               {TbilisiWeather.location.name}
             </h1>
             <p className="text-[#15719f] text-balance">

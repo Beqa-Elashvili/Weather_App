@@ -25,7 +25,6 @@ export function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-
   const handleRotateIcon = () => {
     toggleFormat();
     setRotateIcon(!rotateIcon);
@@ -113,12 +112,15 @@ export function Header() {
         <div className="fixed z-20 inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
       )}
       <div className="p-2 z-30 px-12 bg-blue-300 flex items-center justify-between lg:gap-12 relative">
-        <img
+        <div
           onClick={() => navigate("/")}
-          className="size-12 cursor-pointer"
-          src="/ApiLogo/Api-logo.png"
-          alt="logo"
-        />
+          className="flex items-center gap-2  cursor-pointer"
+        >
+          <img className="size-12" src="/ApiLogo/Api-logo.png" alt="logo" />
+          <p className=" hidden sm:block w-28 text-lg text-blue-900">
+            Weather App
+          </p>
+        </div>
         <Select
           value={selectValue}
           onChange={(e) => setSelectvalue(e)}

@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import { PublicLayout } from "./layouts";
 import { Suspense } from "react";
+import { Spin } from "antd";
 import VideoBackground from "./Components/VideoBackground/VideoBackground";
 
 const Home = lazy(() => import("@src/views/Home"));
@@ -13,7 +14,10 @@ function App() {
     <div>
       <Suspense
         fallback={
-          <div className="flex items-center justify-center">Loading</div>
+          <div className="flex items-center justify-center gap-2 mt-60 text-blue-900">
+            <p className="text-3xl">Weather App</p>
+            <Spin />
+          </div>
         }
       >
         <VideoBackground>

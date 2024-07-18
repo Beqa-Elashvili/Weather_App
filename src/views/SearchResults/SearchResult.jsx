@@ -55,7 +55,7 @@ export function SearchResults() {
                   <p className="text-xl">{item.country}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-">
+              <div className="flex items-center gap-4">
                 <div className="w-24 hidden lg:flex  flex-col gap-1">
                   <p className="bg-blue-100 text-blue-800 shadow-inner rounded-lg p-2 text-center">
                     <span className="float-start">lat: </span>
@@ -66,8 +66,10 @@ export function SearchResults() {
                     <span className="flex justify-end">{item.lon}</span>
                   </p>
                 </div>
-                <p className="w-24 mb-1">Get Weather</p>
-                <MdArrowForwardIos />
+                <div className="flex items-center">
+                  <p className="w-24 mb-1">Get Weather</p>
+                  <MdArrowForwardIos />
+                </div>
               </div>
             </div>
           ))}
