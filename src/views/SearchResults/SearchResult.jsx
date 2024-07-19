@@ -28,6 +28,7 @@ export function SearchResults() {
     <div className="w-full z-0 h-full">
       <video
         autoPlay
+        preload="none"
         loop
         typeof="video/mp4"
         muted

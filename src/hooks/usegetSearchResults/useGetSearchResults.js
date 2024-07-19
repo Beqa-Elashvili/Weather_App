@@ -8,7 +8,7 @@ export function useGetSearchResult() {
     try {
       setSearchLoading(true);
       const resp = await axios.get(
-        `http://api.weatherapi.com/v1/search.json?key=91a6e75e56dc4dad8e192202241306&q=${value}`
+        `https://api.weatherapi.com/v1/search.json?key=91a6e75e56dc4dad8e192202241306&q=${value}`
       );
       setSearchResult(resp.data);
       setSearchLoading(false);
