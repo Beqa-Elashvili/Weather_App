@@ -7,6 +7,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@src": path.resolve(__dirname, "./src"),
+      "date-fns": path.resolve(__dirname, "node_modules/date-fns"),
     },
   },
 });

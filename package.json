@@ -18,6 +18,7 @@
     "@tailwindcss/typography": "^0.5.13",
     "antd": "^5.17.4",
     "axios": "^1.6.8",
+    "date-fns": "^3.6.0",
     "leaflet": "^1.9.4",
     "react": "^18.3.1",
     "react-calendar": "^5.0.0",
