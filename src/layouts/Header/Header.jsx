@@ -116,7 +116,7 @@ export function Header() {
           onClick={() => navigate("/")}
           className="flex items-center gap-2  cursor-pointer"
         >
-          <img className="size-12" src="/ApiLogo/Api-logo.png" alt="logo" />
+          <img className="size-12" src="/images/Apilogo.png" alt="logo" />
           <p className=" hidden sm:block w-28 text-lg text-blue-900">
             Weather App
           </p>
