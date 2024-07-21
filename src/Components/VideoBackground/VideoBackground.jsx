@@ -4,11 +4,12 @@ import GlobeComp from "../GlobeComp/GlobeComp";
 import { useEffect } from "react";
 
 const VideoBackground = ({ children }) => {
-  const { weather } = useGlobalProvider();
+  const { weather, loading } = useGlobalProvider();
   const videoRef = useRef(undefined);
+
   useEffect(() => {
     videoRef.current.defaultMuted = true;
-  });
+  }, []);
 
   return (
     <div className="relative h-full">
@@ -25,9 +26,11 @@ const VideoBackground = ({ children }) => {
         >
           <source src={weather} type="video/mp4" />
         </video>
-        <div className="absolute inset-20 flex justify-center">
-          <GlobeComp />
-        </div>
+        {!loading && (
+          <div className="absolute inset-20 flex justify-center">
+            <GlobeComp />
+          </div>
+        )}
       </div>
       <div className="relative">{children}</div>
     </div>

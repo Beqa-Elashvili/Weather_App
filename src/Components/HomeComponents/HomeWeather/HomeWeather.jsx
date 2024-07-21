@@ -24,7 +24,14 @@ export function HomeWeather() {
             </p>
             <p>{currentWeekDay}</p>
           </div>
-          <div className="p-4 mr-4 text-center">
+          <div>
+            <img
+              className="size-20"
+              src={TbilisiWeather?.current?.condition?.icon}
+              alt="icon"
+            />
+          </div>
+          <div className="mb-2 text-center">
             {currentFormat.Speed === "kph" ? (
               <p className="text-6xl text-[#15719f] ">
                 {TbilisiWeather.current.temp_c}&deg;C
@@ -81,10 +88,10 @@ export function HomeWeather() {
             <div className="bg-slate-500 p-3 rounded-xl w-38">
               <div className="flex items-center gap-2 text-[#a0d9f5]">
                 <TbCloudSearch className="size-6" />
-                <p>C O</p>
+                <p>Cloud</p>
               </div>
               <div className="text-3xl flex mt-2">
-                {TbilisiWeather.current.air_quality.co}
+                {TbilisiWeather.current.cloud} %
               </div>
             </div>
           </div>

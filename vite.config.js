@@ -10,4 +10,15 @@ export default defineConfig({
       "date-fns": path.resolve(__dirname, "node_modules/date-fns"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "react-vendors": ["react", "react-dom"],
+          "date-fns": ["date-fns"],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1500,
+  },
 });

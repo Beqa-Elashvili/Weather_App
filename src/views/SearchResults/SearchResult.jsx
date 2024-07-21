@@ -33,10 +33,10 @@ export function SearchResults() {
         typeof="video/mp4"
         muted
         playsInline
-        src="../../videos/good weather.mp4"
+        src="/videos/good weather.mp4"
         className="absolute w-full h-full min-h-[650px] z-0 object-cover"
       >
-        <source src="../../videos/good weather.mp4" type="video/mp4" />
+        <source src="/videos/good weather.mp4" type="video/mp4" />
       </video>
       <div className="relative z-10 flex justify-center text-white gap-2 items-center p-12">
         <div className="flex flex-col gap-2 lg:w-[80%]">

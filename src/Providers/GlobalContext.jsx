@@ -23,15 +23,15 @@ let Enam = [
 const getWeatherVideoPath = (currentVideo) => {
   switch (currentVideo) {
     case "good":
-      return "../../../videos/good weather.mp4";
+      return "/videos/good weather.mp4";
     case "middle":
-      return "../../../videos/middle weather.mp4";
+      return "/videos/middle weather.mp4";
     case "bad":
-      return "../../../videos/bad weather.mp4";
+      return "/videos/bad weather.mp4";
     case "mist":
-      return "../../../videos/mist weather.mp4";
+      return "/videos/mist weather.mp4";
     case "high snow":
-      return "../../../videos/high snow.mp4";
+      return "/videos/high snow.mp4";
     default:
       return "";
   }
@@ -48,6 +48,8 @@ export const GlobalProvider = ({ children }) => {
   const [timeZone, setTimeZone] = useState();
   const [searchResult, setSearchResult] = useState([]);
   const [itemsToShow, setItemsToShow] = useState(8);
+  const [loading, setLoading] = useState(true);
+
   const location = useLocation();
 
   useEffect(() => {
@@ -71,7 +73,6 @@ export const GlobalProvider = ({ children }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const [loading, setLoading] = useState(true);
   const videoRef = useRef(null);
 
   const handleCurrentMonth = (day) => {

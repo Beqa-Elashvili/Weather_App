@@ -38,7 +38,7 @@ export function CarouselWithDays() {
   };
 
   return (
-    <div className="flex flex-col bg-slate-100 bg-opacity-60 border-solid border border-blue-300 rounded-xl">
+    <div className="flex flex-col bg-slate-100 h-full bg-opacity-60 border-solid border border-blue-300 rounded-xl">
       <div className="flex items-center w-full justify-between p-2">
         <div className="flex items-center gap-2">
           <FaCalendarDays className="size-6 text-[#15719f] " />
@@ -67,7 +67,7 @@ export function CarouselWithDays() {
         </div>
       </div>
       {currentWeathers?.length === 0 && (
-        <div className="text-center h-48 w-full">
+        <div className="text-center h-48 m-auto w-full">
           <p className="mt-14 text-3xl text-[#15719f] ">
             Daily weather is not available for this location
           </p>

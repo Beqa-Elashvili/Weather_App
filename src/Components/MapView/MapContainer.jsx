@@ -1,7 +1,7 @@
 import { MapContainer } from "react-leaflet";
 import { useEffect } from "react";
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
-import { useMap, Marker, Popup, TileLayer } from "react-leaflet";
+import { useMap, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 export function MapContent() {
@@ -35,11 +35,7 @@ export function MapContent() {
             url="https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=d3k12FZaz83jdLUdUwqb"
           />
           <ChangeMapView position={position} />
-          <Marker position={position}>
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker>
+          A pretty CSS3 popup. <br /> Easily customizable.
         </MapContainer>
       )}
     </div>
