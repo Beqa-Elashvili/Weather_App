@@ -38,10 +38,10 @@ export function CarouselWithDays() {
   };
 
   return (
-    <div className="flex flex-col bg-slate-100 h-full bg-opacity-60 border-solid border border-blue-300 rounded-xl">
+    <div className="flex flex-col bg-slate-100 bg-opacity-60 border-solid border border-blue-300 rounded-xl">
       <div className="flex items-center w-full justify-between p-2">
         <div className="flex items-center gap-2">
-          <FaCalendarDays className="size-6 text-[#15719f] " />
+          <FaCalendarDays className="size-6 text-[#15719f]" />
           <p className=" text-xl  text-[#15719f] ">10-DAY FORECAST</p>
           <div className="ml-2">
             <CalendarModal />

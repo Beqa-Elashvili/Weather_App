@@ -26,11 +26,11 @@ const VideoBackground = ({ children }) => {
         >
           <source src={weather} type="video/mp4" />
         </video>
-        {!loading && (
+        {/* {!loading && (
           <div className="absolute inset-20 flex justify-center">
             <GlobeComp />
           </div>
-        )}
+        )} */}
       </div>
       <div className="relative">{children}</div>
     </div>

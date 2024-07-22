@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { GlobalProvider } from "./Providers/GlobalContext.jsx";
 import { BrowserRouter } from "react-router-dom";
-// import "./assets/Globalcss.css";
+import "animate.css";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(

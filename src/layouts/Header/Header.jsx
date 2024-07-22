@@ -7,6 +7,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import { MdArrowForwardIos } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useGetSearchResult } from "@src/hooks/usegetSearchResults";
+import GlobeComp from "@src/Components/GlobeComp/GlobeComp";
 
 export function Header() {
   const {
@@ -152,6 +153,7 @@ export function Header() {
           >
             <IoSearchOutline className="w-12 h-5 cursor-pointer" />
           </button>
+
           <div
             className={`text-white top-10 w-full p-2 bg-blue-100 w-full overflow-x-auto rounded max-h-60 absolute z-20 flex flex-col gap-2 ${
               searchResult.length === 0 ? "hidden" : "flex"
@@ -211,21 +213,24 @@ export function Header() {
             </>
           )}
         </button>
-        <Button
-          className="flex items-center gap-2 hidden lg:flex"
-          onClick={handleRotateIcon}
-        >
-          Change Format
-          <FaArrowsRotate
-            className="text-blue-400"
-            style={{
-              height: 20,
-              width: 30,
-              transition: "transform 1s ease",
-              transform: rotateIcon ? "rotate(360deg)" : "rotate(0deg)",
-            }}
-          />
-        </Button>
+        <div className="relative flex items-center">
+          <GlobeComp />
+          <Button
+            className="flex items-center gap-2 right-0 hidden lg:flex"
+            onClick={handleRotateIcon}
+          >
+            Change Format
+            <FaArrowsRotate
+              className="text-blue-400"
+              style={{
+                height: 20,
+                width: 30,
+                transition: "transform 1s ease",
+                transform: rotateIcon ? "rotate(360deg)" : "rotate(0deg)",
+              }}
+            />
+          </Button>
+        </div>
       </div>
       <div
         className={`fixed z-30 h-full top-16 w-56 right-0 bg-white shadow-lg transition-transform transform ${

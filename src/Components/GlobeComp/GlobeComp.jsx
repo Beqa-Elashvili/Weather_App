@@ -19,8 +19,8 @@ function GlobeComp() {
       <div className="hidden lg:block">
         <Globe
           ref={globeRef}
-          height={600}
-          width={600}
+          height={50}
+          width={50}
           waitForGlobeReady={loading}
           globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
           backgroundColor="rgba(0, 0, 0, 0)"

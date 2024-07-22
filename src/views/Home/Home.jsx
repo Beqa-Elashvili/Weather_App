@@ -8,11 +8,10 @@ import { MapContent } from "@src/Components/MapView";
 export function Home() {
   const { loading } = useGlobalProvider();
   const SkeletonArray = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
-
   return (
-    <div className="p-2 lg:px-12 mt-8">
+    <div className="p-2 lg:px-12  mt-8">
       {loading ? (
-        <div className="p-12 block  lg:flex lg:justify-between">
+        <div className="p-12 block lg:flex lg:justify-between">
           <div className="hidden sm:hidden md:flex justify-between">
             <div className="w-80 flex flex-col items-center gap-2">
               <Skeleton.Input active />
