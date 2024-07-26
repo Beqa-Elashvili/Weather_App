@@ -1,6 +1,6 @@
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
 import Carousel from "react-simply-carousel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetIcons } from "@src/hooks/useGetIcons";
 import { FaArrowLeft } from "react-icons/fa6";
 import { FaCalendarDays } from "react-icons/fa6";
@@ -25,7 +25,10 @@ export function CarouselWithDays() {
     currentFormat,
     handleCurrentMonth,
     itemsToShow,
+    currentDay,
   } = useGlobalProvider();
+
+  const formattedCurrentDay = currentDay.toLocaleDateString("en-GB");
 
   const handleCorrectionDate = () => {
     setRotateIcon(!rotateIcon);
@@ -123,7 +126,9 @@ export function CarouselWithDays() {
                   className="flex flex-col text-white items-center  gap-2 w-full py-4  xl:w-28 rounded-xl px-2 md:px-3 lg:px-4 xl:px-4 hover:bg-slate-400  cursor-pointer"
                 >
                   <div className="text-center text-md md:text-md lg:text- xl:text-xl">
-                    {index === 0 ? (
+                    {index === 0 &&
+                    new Date(item.datetime).toLocaleDateString("en-GB") ===
+                      formattedCurrentDay ? (
                       <>
                         <p>Today</p>
                       </>
