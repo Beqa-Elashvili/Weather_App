@@ -79,7 +79,7 @@ export function SearchResults() {
               ))}
             </>
           ) : (
-            <div className="flex items-center flex-col gap-2 w-4/7 md:w-3/5 lg:w-1/2  bg-slate-500 relative bg-opacity-70  z-0 p-4 lg:p-6 rounded-xl  border-solid border">
+            <div className="flex items-center h-full flex-col gap-2 w-4/7 md:w-3/5 lg:w-1/2  bg-slate-500 relative bg-opacity-70  z-0 p-4 lg:p-6 rounded-xl  border-solid border">
               <div className="flex items-center gap-2">
                 <BiSolidErrorAlt className="text-red-500 size-10 animate__animated animate__shakeX" />
                 <p className="text-3xl  font-bold">Not Found</p>
