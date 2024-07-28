@@ -52,6 +52,7 @@ export const GlobalProvider = ({ children }) => {
 
   const location = useLocation();
 
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 2560) {

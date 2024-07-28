@@ -45,7 +45,7 @@ export function CarouselWithDays() {
       <div className="flex items-center w-full justify-between p-2">
         <div className="flex items-center gap-2">
           <FaCalendarDays className="size-6 text-[#15719f]" />
-          <p className=" text-xl  text-[#15719f] ">10-DAY FORECAST</p>
+          <p className=" text-xl  text-[#15719f] ">DAYS FORECAST</p>
           <div className="ml-2">
             <CalendarModal />
           </div>

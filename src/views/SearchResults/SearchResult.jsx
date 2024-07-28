@@ -9,7 +9,7 @@ import { BiSolidErrorAlt } from "react-icons/bi";
 import useGlobalProvider from "@src/Providers/useGlobalProvider";
 
 export function SearchResults() {
-  const { GetSearchResult } = useGetSearchResult();
+  const { GetSearchResult, SearchLoading } = useGetSearchResult();
   const { formattedStartDate, formattedEndDate } = useGlobalProvider();
   const [results, setResults] = useState([]);
   const { City } = useParams();
@@ -41,7 +41,21 @@ export function SearchResults() {
       </video>
       <div className="relative z-10 flex justify-center text-white gap-2 items-center p-12">
         <div className="flex flex-col justify-center items-center gap-2 lg:w-[80%]">
-          {results.length !== 0 ? (
+          {SearchLoading || results.length === 0 ? (
+            <>
+              <div className="flex items-center h-full flex-col gap-2 w-4/7 md:w-3/5 lg:w-1/2  bg-slate-500 relative bg-opacity-70  z-0 p-4 lg:p-6 rounded-xl  border-solid border">
+                <div className="flex items-center gap-2">
+                  <BiSolidErrorAlt className="text-red-500 size-10 animate__animated animate__shakeX" />
+                  <p className="text-3xl  font-bold">Not Found</p>
+                </div>
+                <p className="text-lg text-center">
+                  Unfortunately, the city you are looking for could not be
+                  found. Please ensure that the name is spelled correctly and
+                  try your search again.
+                </p>
+              </div>
+            </>
+          ) : (
             <>
               {results?.map((item) => (
                 <div
@@ -78,18 +92,6 @@ export function SearchResults() {
                 </div>
               ))}
             </>
-          ) : (
-            <div className="flex items-center h-full flex-col gap-2 w-4/7 md:w-3/5 lg:w-1/2  bg-slate-500 relative bg-opacity-70  z-0 p-4 lg:p-6 rounded-xl  border-solid border">
-              <div className="flex items-center gap-2">
-                <BiSolidErrorAlt className="text-red-500 size-10 animate__animated animate__shakeX" />
-                <p className="text-3xl  font-bold">Not Found</p>
-              </div>
-              <p className="text-lg text-center">
-                Unfortunately, the city you are looking for could not be found.
-                Please ensure that the name is spelled correctly and try your
-                search again.
-              </p>
-            </div>
           )}
         </div>
       </div>
