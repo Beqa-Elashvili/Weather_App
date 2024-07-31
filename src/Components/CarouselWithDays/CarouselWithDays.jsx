@@ -32,7 +32,7 @@ export function CarouselWithDays() {
 
   const handleCorrectionDate = () => {
     setRotateIcon(!rotateIcon);
-    navigate();
+    setActiveSlideIndex(0);
     if (!City) {
       navigate(`/Weather/Tbilisi/${formattedStartDate}/${formattedEndDate}`);
     } else {
