@@ -3,6 +3,7 @@ import useGlobalProvider from "@src/Providers/useGlobalProvider";
 
 export function useGetCurrentWeathers() {
   const { currentFormat, setCurrentWeathers } = useGlobalProvider();
+
   async function GetCurrentWeathers(city, startDate, endDate) {
     try {
       const handleFormat = currentFormat.Speed === "kph" ? "metric" : "us";
@@ -11,7 +12,12 @@ export function useGetCurrentWeathers() {
       );
       setCurrentWeathers(resp.data.days);
     } catch (error) {
-      alert(`${error.response.data.split(" ").slice(0, 13).join(" ")} please try again later.`);
+      alert(
+        `${error.response.data
+          .split(" ")
+          .slice(0, 13)
+          .join(" ")} please try again later.`
+      );
       setCurrentWeathers([]);
     }
   }
